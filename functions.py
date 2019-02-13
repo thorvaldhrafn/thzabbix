@@ -1,7 +1,7 @@
 import json
 import requests
 import os
-
+import yaml
 
 def conf_get(conf_file):
     conf_param = dict()
@@ -12,20 +12,6 @@ def conf_get(conf_file):
                 conf_param[line[0]] = line[1]
     return conf_param
 
-access_param = conf_get("access.conf")
-
-user = access_param["user"]
-passwd = access_param["passwd"]
-url = access_param["url"]
-
-authdata = {"jsonrpc": "2.0", "method": "user.login", "params": {"user": user, "password": passwd}, "id": "1"}
-headers = {'content-type': 'application/json-rpc'}
-
-auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
-
-authtock = auth_req.json()["result"]
-
-
 def hostget(param, param1):
     paramslst = dict(output="extend")
     paramsfilter = dict()
@@ -34,7 +20,6 @@ def hostget(param, param1):
     hostget = dict(jsonrpc="2.0", method="host.get", params=paramslst,
                    auth=authtock, id=1)
     return requests.post(url, data=json.dumps(hostget), headers=headers)
-
 
 def hgroupget(param, param1):
     paramslst = dict(output="extend")
@@ -45,7 +30,6 @@ def hgroupget(param, param1):
                    auth=authtock, id=1)
     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
-
 def templateget(param, param1):
     paramslst = dict(output="extend")
     paramsfilter = dict()
@@ -55,7 +39,6 @@ def templateget(param, param1):
                    auth=authtock, id=1)
     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
-
 def graphinfo(hostid, graph_name):
     paramslst = dict(output="extend")
     paramslst["hostids"] = hostid
@@ -63,7 +46,6 @@ def graphinfo(hostid, graph_name):
     graphgetall = dict(jsonrpc="2.0", method="graph.get", params=paramslst,
                        auth=authtock, id=1)
     return requests.post(url, data=json.dumps(graphgetall), headers=headers)
-
 
 def graphinfo_id(graphid):
     paramslst = dict(output="extend")
@@ -80,7 +62,6 @@ def screeninfo(screenname):
                         auth=authtock, id=1)
     return requests.post(url, data=json.dumps(screengetall), headers=headers)
 
-
 def screeniteminfo(screen_id, hpos, vprevpos):
     paramslst = dict(output="extend")
     paramslst["screenids"] = screen_id
@@ -89,6 +70,30 @@ def screeniteminfo(screen_id, hpos, vprevpos):
                             auth=authtock, id=1)
     return requests.post(url, data=json.dumps(screenitemgetall), headers=headers)
 
-
 def shell_comm(sh_comm):
     return os.system(sh_comm)
+
+access_param = conf_get("access.conf")
+
+user = access_param["user"]
+passwd = access_param["passwd"]
+url = access_param["url"]
+
+authdata = {"jsonrpc": "2.0", "method": "user.login", "params": {"user": user, "password": passwd}, "id": "1"}
+headers = {'content-type': 'application/json-rpc'}
+
+auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
+
+authtock = auth_req.json()["result"]
+
+ans_conf = conf_get("ansible.conf")
+
+inv_path = ans_conf["inventory_path"]
+
+with open(inv_path, 'r') as inventory:
+    inventory_full = yaml.load(inventory)
+    print(inventory_full)
+
+newhost_spec = inventory_full["newhost"]["hosts"]
+
+hostname = newhost_spec.keys()[0]

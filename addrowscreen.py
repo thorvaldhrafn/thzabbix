@@ -1,9 +1,7 @@
 import json
 import requests
 
-from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo
-
-hostname = "test ggttestaa"
+from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo, hostname
 
 host_id = hostget("host", hostname).json()["result"][0]["hostid"]
 

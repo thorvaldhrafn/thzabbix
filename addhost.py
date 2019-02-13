@@ -1,20 +1,9 @@
 import json
 import requests
-import yaml
 
-from functions import url, authtock, headers, hgroupget, templateget, shell_comm, conf_get
 
-ans_conf = conf_get("ansible.conf")
+from functions import url, authtock, headers, hgroupget, templateget, shell_comm, hostname
 
-inv_path = ans_conf["inventory_path"]
-
-with open(inv_path, 'r') as inventory:
-    inventory_full = yaml.load(inventory)
-    print(inventory_full)
-
-newhost_spec = inventory_full["newhost"]["hosts"]
-
-hostname = newhost_spec.keys()[0]
 host_ip = newhost_spec[hostname]["ansible_host"]
 host_port = newhost_spec[hostname]["zabbix_port"]
 host_group = newhost_spec[hostname]["zabbix_host_group"]
