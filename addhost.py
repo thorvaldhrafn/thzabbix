@@ -2,7 +2,7 @@ import json
 import requests
 
 
-from functions import url, authtock, headers, hgroupget, templateget, shell_comm, hostname
+from functions import url, authtock, headers, hgroupget, templateget, shell_comm, newhost_spec, hostname
 
 host_ip = newhost_spec[hostname]["ansible_host"]
 host_port = newhost_spec[hostname]["zabbix_port"]

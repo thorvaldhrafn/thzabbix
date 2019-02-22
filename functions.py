@@ -92,7 +92,6 @@ inv_path = ans_conf["inventory_path"]
 
 with open(inv_path, 'r') as inventory:
     inventory_full = yaml.load(inventory)
-    print(inventory_full)
 
 newhost_spec = inventory_full["newhost"]["hosts"]
 
