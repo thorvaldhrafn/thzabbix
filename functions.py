@@ -73,6 +73,9 @@ def screeniteminfo(screen_id, hpos, vprevpos):
 def shell_comm(sh_comm):
     return os.system(sh_comm)
 
+def shell_stdout(sh_comm):
+    return os.popen(sh_comm).read()
+
 access_param = conf_get("access.conf")
 
 user = access_param["user"]
@@ -93,6 +96,6 @@ inv_path = ans_conf["inventory_path"]
 with open(inv_path, 'r') as inventory:
     inventory_full = yaml.load(inventory)
 
-newhost_spec = inventory_full["newhost"]["hosts"]
+newhost_spec = inventory_full["newservers"]["hosts"]
 
 hostname = newhost_spec.keys()[0]

@@ -2,7 +2,7 @@ import json
 import requests
 
 
-from functions import url, authtock, headers, hgroupget, templateget, shell_comm, newhost_spec, hostname
+from functions import url, authtock, headers, hgroupget, templateget, newhost_spec, hostname, shell_stdout
 
 host_ip = newhost_spec[hostname]["ansible_host"]
 host_port = newhost_spec[hostname]["zabbix_port"]
@@ -12,10 +12,11 @@ host_tmplt = newhost_spec[hostname]["zabbix_host_tmplt"]
 host_tls = newhost_spec[hostname]["zabbix_tls"]
 
 if host_tls:
-    psk_get = 'ansible -b -m shell -a "cat /etc/zabbix/zabbix_agentd.conf | grep TLSPSKIdentity" ' + hostname + ' | grep TLSPSKIdentity | awk -F"=" \'{ print $2 }\''
-    psk_identity = shell_comm(psk_get)
-    psk_get_key = 'ansible -b -m shell -a "cat /etc/zabbix/zabbix_agentd.psk" ' + hostname
-    psk_key = shell_comm(psk_get_key)
+    inv_str = '--inventory=\"' + inv_path + '\"'
+    psk_get = 'ansible ' + inv_str + ' -b -m shell -a \"cat /etc/zabbix/zabbix_agentd.conf | grep TLSPSKIdentity\" ' + hostname + ' | grep TLSPSKIdentity | awk -F"=" \'{ print $2 }\''
+    psk_identity = os.popen(psk_get).read().rstrip()
+    psk_get_key = 'ansible ' + inv_str + ' -b -m shell -a "cat /etc/zabbix/zabbix_agentd.psk" ' + hostname + " | tail -1"
+    psk_key = shell_stdout(inv_str).rstrip()
     tlsconnect = "2"
     tlsaccept = "2"
 else:
