@@ -1,8 +1,9 @@
 import json
 import requests
 import sys
+import os
 
-from functions import url, authtock, headers, hgroupget, templateget, newhost_spec, inv_path, inventory_pars
+from functions import url, authtock, headers, hgroupget, templateget, inventory_pars, shell_stdout
 
 inv_path = sys.argv[1]
 hostname = sys.argv[2]

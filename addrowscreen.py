@@ -2,7 +2,7 @@ import json
 import requests
 import sys
 
-from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo, hostname, inventory_pars
+from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo, inventory_pars
 
 inv_path = sys.argv[1]
 hostname = sys.argv[2]

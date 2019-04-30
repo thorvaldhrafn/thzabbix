@@ -92,6 +92,10 @@ def inventory_pars(inv_path, hostname):
         inventory_full = yaml.load(inventory)
     return inventory_full[hostname]
 
+
+def shell_stdout(sh_comm):
+    return os.popen(sh_comm).read()
+
 access_param = conf_get("access.conf")
 
 user = access_param["user"]
