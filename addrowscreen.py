@@ -1,7 +1,13 @@
 import json
 import requests
+import sys
 
-from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo, hostname
+from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo, hostname, inventory_pars
+
+inv_path = sys.argv[1]
+hostname = sys.argv[2]
+
+newhost_spec = inventory_pars(inv_path, hostname)
 
 host_id = hostget("host", hostname).json()["result"][0]["hostid"]
 

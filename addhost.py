@@ -1,13 +1,18 @@
 import json
 import requests
+import sys
 
+from functions import url, authtock, headers, hgroupget, templateget, newhost_spec, inv_path, inventory_pars
 
-from functions import url, authtock, headers, hgroupget, templateget, shell_comm, newhost_spec, hostname, inv_path
+inv_path = sys.argv[1]
+hostname = sys.argv[2]
 
-host_ip = newhost_spec[hostname]["ansible_host"]
-host_port = newhost_spec[hostname]["zabbix_port"]
-host_group = newhost_spec[hostname]["zabbix_host_group"]
-host_tmplt = newhost_spec[hostname]["zabbix_host_tmplt"]
+newhost_spec = inventory_pars(inv_path, hostname)
+
+host_ip = newhost_spec["ansible_host"]
+host_port = newhost_spec["zabbix_port"]
+host_group = newhost_spec["zabbix_host_group"]
+host_tmplt = newhost_spec["zabbix_host_tmplt"]
 
 host_tls = newhost_spec[hostname]["zabbix_tls"]
 

@@ -2,6 +2,8 @@ import json
 import requests
 import os
 import yaml
+import sys
+
 
 def conf_get(conf_file):
     conf_param = dict()
@@ -12,6 +14,7 @@ def conf_get(conf_file):
                 conf_param[line[0]] = line[1]
     return conf_param
 
+
 def hostget(param, param1):
     paramslst = dict(output="extend")
     paramsfilter = dict()
@@ -20,6 +23,7 @@ def hostget(param, param1):
     hostget = dict(jsonrpc="2.0", method="host.get", params=paramslst,
                    auth=authtock, id=1)
     return requests.post(url, data=json.dumps(hostget), headers=headers)
+
 
 def hgroupget(param, param1):
     paramslst = dict(output="extend")
@@ -30,6 +34,7 @@ def hgroupget(param, param1):
                    auth=authtock, id=1)
     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
+
 def templateget(param, param1):
     paramslst = dict(output="extend")
     paramsfilter = dict()
@@ -39,6 +44,7 @@ def templateget(param, param1):
                    auth=authtock, id=1)
     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
+
 def graphinfo(hostid, graph_name):
     paramslst = dict(output="extend")
     paramslst["hostids"] = hostid
@@ -46,6 +52,7 @@ def graphinfo(hostid, graph_name):
     graphgetall = dict(jsonrpc="2.0", method="graph.get", params=paramslst,
                        auth=authtock, id=1)
     return requests.post(url, data=json.dumps(graphgetall), headers=headers)
+
 
 def graphinfo_id(graphid):
     paramslst = dict(output="extend")
@@ -62,6 +69,7 @@ def screeninfo(screenname):
                         auth=authtock, id=1)
     return requests.post(url, data=json.dumps(screengetall), headers=headers)
 
+
 def screeniteminfo(screen_id, hpos, vprevpos):
     paramslst = dict(output="extend")
     paramslst["screenids"] = screen_id
@@ -70,11 +78,19 @@ def screeniteminfo(screen_id, hpos, vprevpos):
                             auth=authtock, id=1)
     return requests.post(url, data=json.dumps(screenitemgetall), headers=headers)
 
+
 def shell_comm(sh_comm):
     return os.system(sh_comm)
 
+
 def shell_stdout(sh_comm):
     return os.popen(sh_comm).read()
+
+
+def inventory_pars(inv_path, hostname):
+    with open(inv_path, 'r') as inventory:
+        inventory_full = yaml.load(inventory)
+    return inventory_full[hostname]
 
 access_param = conf_get("access.conf")
 
@@ -88,14 +104,3 @@ headers = {'content-type': 'application/json-rpc'}
 auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
 
 authtock = auth_req.json()["result"]
-
-ans_conf = conf_get("ansible.conf")
-
-inv_path = ans_conf["inventory_path"]
-
-with open(inv_path, 'r') as inventory:
-    inventory_full = yaml.load(inventory)
-
-newhost_spec = inventory_full["newservers"]["hosts"]
-
-hostname = newhost_spec.keys()[0]
