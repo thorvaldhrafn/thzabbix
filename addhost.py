@@ -3,12 +3,14 @@ import requests
 import sys
 import os
 
-from functions import url, authtock, headers, hgroupget, templateget, inventory_pars, shell_stdout
+from functions import url, authtock, headers, hgroupget, templateget, inventory_pars, shell_stdout, host_specs
 
 inv_path = sys.argv[1]
 hostname = sys.argv[2]
 
-newhost_spec = inventory_pars(inv_path, hostname)
+inventory_list = inventory_pars(inv_path)
+
+host_specs(inventory_list, hostname)
 
 host_ip = newhost_spec["ansible_host"]
 host_port = newhost_spec["zabbix_port"]

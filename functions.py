@@ -2,7 +2,6 @@ import json
 import requests
 import os
 import yaml
-import sys
 
 
 def conf_get(conf_file):
@@ -87,10 +86,20 @@ def shell_stdout(sh_comm):
     return os.popen(sh_comm).read()
 
 
-def inventory_pars(inv_path, hostname):
+def inventory_pars(inv_path):
     with open(inv_path, 'r') as inventory:
         inventory_full = yaml.load(inventory)
-    return inventory_full[hostname]
+    return inventory_full
+
+
+def host_specs(inventory, hostname):
+    if hostname in inventory:
+        return inventory.get(hostname)
+    for key, value in inventory.items():
+        if isinstance(value,dict):
+            item = host_specs(value, hostname)
+            if item is not None:
+                return item
 
 
 def shell_stdout(sh_comm):
