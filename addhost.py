@@ -16,8 +16,7 @@ host_ip = newhost_specs["ansible_host"]
 host_port = newhost_specs["zabbix_port"]
 host_group = newhost_specs["zabbix_host_group"]
 host_tmplt = newhost_specs["zabbix_host_tmplt"]
-
-host_tls = newhost_specs[hostname]["zabbix_tls"]
+host_tls = newhost_specs["zabbix_tls"]
 
 if host_tls:
     inv_str = '--inventory=\"' + inv_path + '\"'
