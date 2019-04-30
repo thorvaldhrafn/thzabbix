@@ -23,7 +23,7 @@ if host_tls:
     psk_get = 'ansible ' + inv_str + ' -b -m shell -a \"cat /etc/zabbix/zabbix_agentd.conf | grep TLSPSKIdentity\" ' + hostname + ' | grep TLSPSKIdentity | awk -F"=" \'{ print $2 }\''
     psk_identity = os.popen(psk_get).read().rstrip()
     psk_get_key = 'ansible ' + inv_str + ' -b -m shell -a "cat /etc/zabbix/zabbix_agentd.psk" ' + hostname + " | tail -1"
-    # psk_key = shell_stdout(inv_str).rstrip()
+    psk_key = shell_stdout(psk_get_key).rstrip()
     tlsconnect = "2"
     tlsaccept = "2"
 else:
@@ -37,7 +37,7 @@ template_id = templateget("host", host_tmplt).json()["result"][0]["templateid"]
 
 hostcreate = dict(jsonrpc="2.0", method="host.create", params=dict(host=hostname, tls_connect=tlsconnect,
                                                                    tls_accept=tlsaccept, tls_psk_identity=psk_identity,
-                                                                   tls_psk=psk_get_key,
+                                                                   tls_psk=psk_key,
                                                                    interfaces=[
                                                                        dict(type=1, main=1, useip=1,
                                                                             ip=host_ip, dns="", port=host_port)
