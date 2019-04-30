@@ -12,12 +12,12 @@ inventory_list = inventory_pars(inv_path)
 
 host_specs(inventory_list, hostname)
 
-host_ip = newhost_spec["ansible_host"]
-host_port = newhost_spec["zabbix_port"]
-host_group = newhost_spec["zabbix_host_group"]
-host_tmplt = newhost_spec["zabbix_host_tmplt"]
+host_ip = host_specs["ansible_host"]
+host_port = host_specs["zabbix_port"]
+host_group = host_specs["zabbix_host_group"]
+host_tmplt = host_specs["zabbix_host_tmplt"]
 
-host_tls = newhost_spec[hostname]["zabbix_tls"]
+host_tls = host_specs[hostname]["zabbix_tls"]
 
 if host_tls:
     inv_str = '--inventory=\"' + inv_path + '\"'
