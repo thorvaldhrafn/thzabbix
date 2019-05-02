@@ -109,7 +109,7 @@ def host_specs(inventory, hostname):
 def shell_stdout(sh_comm):
     return os.popen(sh_comm).read()
 
-access_param = conf_get("access.conf")
+access_param = conf_get(filedir + "/access.conf")
 
 user = access_param["user"]
 passwd = access_param["passwd"]
