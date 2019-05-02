@@ -7,8 +7,6 @@ from functions import url, authtock, headers, hostget, screeninfo, screeniteminf
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-print(filedir)
-
 hostname = sys.argv[1]
 
 host_id = hostget("host", hostname).json()["result"][0]["hostid"]

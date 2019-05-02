@@ -4,8 +4,6 @@ import os
 import yaml
 import sys
 
-sys.path.append(filedir)
-
 
 def conf_get(conf_file):
     conf_param = dict()
