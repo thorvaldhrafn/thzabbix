@@ -4,8 +4,7 @@ import sys
 
 from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo
 
-inv_path = sys.argv[1]
-hostname = sys.argv[2]
+hostname = sys.argv[1]
 
 host_id = hostget("host", hostname).json()["result"][0]["hostid"]
 
