@@ -2,9 +2,9 @@ import json
 import requests
 import sys
 
-sys.path.append("./")
-
 from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo
+
+sys.path.append("./")
 
 hostname = sys.argv[1]
 

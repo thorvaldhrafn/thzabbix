@@ -7,6 +7,7 @@ import sys
 
 sys.path.append("./")
 
+
 def conf_get(conf_file):
     conf_param = dict()
     with open(conf_file) as conf:

@@ -3,9 +3,9 @@ import requests
 import sys
 import os
 
-sys.path.append("./")
-
 from functions import url, authtock, headers, hgroupget, templateget, inventory_pars, shell_stdout, host_specs
+
+sys.path.append("./")
 
 inv_path = sys.argv[1]
 hostname = sys.argv[2]
