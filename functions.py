@@ -2,7 +2,10 @@ import json
 import requests
 import os
 import yaml
+import sys
 
+
+sys.path.append("./")
 
 def conf_get(conf_file):
     conf_param = dict()
