@@ -4,7 +4,6 @@ import os
 import yaml
 import sys
 
-filedir = os.path.dirname(sys.argv[0])
 sys.path.append(filedir)
 
 
@@ -109,7 +108,7 @@ def host_specs(inventory, hostname):
 def shell_stdout(sh_comm):
     return os.popen(sh_comm).read()
 
-access_param = conf_get(filedir + "/access.conf")
+access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
 
 user = access_param["user"]
 passwd = access_param["passwd"]

@@ -5,8 +5,7 @@ import os
 
 from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo
 
-filedir = os.path.dirname(sys.argv[0])
-sys.path.append(filedir)
+sys.path.append(os.path.dirname(sys.argv[0]))
 
 print(filedir)
 
