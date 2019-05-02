@@ -1,10 +1,12 @@
 import json
 import requests
 import sys
+import os
 
 from functions import url, authtock, headers, hostget, screeninfo, screeniteminfo, graphinfo_id, graphinfo
 
-sys.path.append("./")
+filedir = os.path.dirname(sys.argv[0])
+sys.path.append(filedir)
 
 hostname = sys.argv[1]
 

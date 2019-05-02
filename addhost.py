@@ -5,7 +5,8 @@ import os
 
 from functions import url, authtock, headers, hgroupget, templateget, inventory_pars, shell_stdout, host_specs
 
-sys.path.append("./")
+filedir = os.path.dirname(sys.argv[0])
+sys.path.append(filedir)
 
 inv_path = sys.argv[1]
 hostname = sys.argv[2]
