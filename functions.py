@@ -90,22 +90,6 @@ def shell_stdout(sh_comm):
     return os.popen(sh_comm).read()
 
 
-def inventory_pars(inv_path):
-    with open(inv_path, 'r') as inventory:
-        inventory_full = yaml.load(inventory)
-    return inventory_full
-
-
-# def host_specs(inventory, hostname):
-#     if hostname in inventory:
-#         return inventory.get(hostname)
-#     for key, value in inventory.items():
-#         if isinstance(value,dict):
-#             item = host_specs(value, hostname)
-#             if item is not None:
-#                 return item
-
-
 def ansvarinfo(hostname, ansvar):
     var_sring = "var=" + ansvar
     param = ['ansible', '-o', '-m', 'debug'] + [hostname] + ['-a'] + [var_sring]

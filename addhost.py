@@ -3,23 +3,11 @@ import requests
 import sys
 import os
 
-from functions import url, authtock, headers, hgroupget, templateget, inventory_pars, shell_stdout, ansvarinfo
+from functions import url, authtock, headers, hgroupget, templateget, shell_stdout, ansvarinfo
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-inv_path = sys.argv[1]
-hostname = sys.argv[2]
-
-# inventory_list = inventory_pars(inv_path)
-#
-# newhost_specs = host_specs(inventory_list, hostname)
-#
-# host_ip = newhost_specs["ansible_host"]
-# host_port = newhost_specs["zabbix_port"]
-# host_group = newhost_specs["zabbix_host_group"]
-# host_tmplt = newhost_specs["zabbix_host_tmplt"]
-# host_tls = newhost_specs["zabbix_tls"]
-
+hostname = sys.argv[1]
 
 host_ip = ansvarinfo(hostname, "ansible_host")
 host_port = ansvarinfo(hostname, "zabbix_port")
