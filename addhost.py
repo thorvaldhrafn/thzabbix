@@ -3,22 +3,29 @@ import requests
 import sys
 import os
 
-from functions import url, authtock, headers, hgroupget, templateget, inventory_pars, shell_stdout, host_specs
+from functions import url, authtock, headers, hgroupget, templateget, inventory_pars, shell_stdout, ansvarinfo
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
 inv_path = sys.argv[1]
 hostname = sys.argv[2]
 
-inventory_list = inventory_pars(inv_path)
+# inventory_list = inventory_pars(inv_path)
+#
+# newhost_specs = host_specs(inventory_list, hostname)
+#
+# host_ip = newhost_specs["ansible_host"]
+# host_port = newhost_specs["zabbix_port"]
+# host_group = newhost_specs["zabbix_host_group"]
+# host_tmplt = newhost_specs["zabbix_host_tmplt"]
+# host_tls = newhost_specs["zabbix_tls"]
 
-newhost_specs = host_specs(inventory_list, hostname)
 
-host_ip = newhost_specs["ansible_host"]
-host_port = newhost_specs["zabbix_port"]
-host_group = newhost_specs["zabbix_host_group"]
-host_tmplt = newhost_specs["zabbix_host_tmplt"]
-host_tls = newhost_specs["zabbix_tls"]
+host_ip = ansvarinfo(hostname, "ansible_host")
+host_port = ansvarinfo(hostname, "zabbix_port")
+host_group = ansvarinfo(hostname, "zabbix_host_group")
+host_tmplt = ansvarinfo(hostname, "zabbix_host_tmplt")
+host_tls = ansvarinfo(hostname, "zabbix_tls")
 
 if host_tls:
     inv_str = '--inventory=\"' + inv_path + '\"'
