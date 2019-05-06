@@ -26,6 +26,8 @@ get_prow_req = screeniteminfo(screen_id, "", vpreppos).json()["result"]
 screen_res_param = dict(jsonrpc="2.0", method="screen.update", params=dict(screenid=screen_id, vsize=screen_vsize), auth=authtock, id=1)
 screenresget = requests.post(url, data=json.dumps(screen_res_param), headers=headers)
 
+print(get_prow_req)
+
 print(screenresget.json())
 
 hpos = 0
