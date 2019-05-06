@@ -16,10 +16,9 @@ host_tmplt = ansvarinfo(hostname, "zabbix_host_tmplt")
 host_tls = ansvarinfo(hostname, "zabbix_tls")
 
 if host_tls:
-    inv_str = '--inventory=\"' + inv_path + '\"'
-    psk_get = 'ansible ' + inv_str + ' -b -m shell -a \"cat /etc/zabbix/zabbix_agentd.conf | grep TLSPSKIdentity\" ' + hostname + ' | grep TLSPSKIdentity | awk -F"=" \'{ print $2 }\''
+    psk_get = 'ansible -b -m shell -a \"cat /etc/zabbix/zabbix_agentd.conf | grep TLSPSKIdentity\" ' + hostname + ' | grep TLSPSKIdentity | awk -F"=" \'{ print $2 }\''
     psk_identity = os.popen(psk_get).read().rstrip()
-    psk_get_key = 'ansible ' + inv_str + ' -b -m shell -a "cat /etc/zabbix/zabbix_agentd.psk" ' + hostname + " | tail -1"
+    psk_get_key = 'ansible -b -m shell -a "cat /etc/zabbix/zabbix_agentd.psk" ' + hostname + " | tail -1"
     psk_key = shell_stdout(psk_get_key).rstrip()
     tlsconnect = "2"
     tlsaccept = "2"
