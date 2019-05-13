@@ -101,6 +101,7 @@ def anshlist(list):
     param = ['ansible', '--list-hosts'] + [list]
     value = subprocess.check_output(param)
     value = value.replace("\n", " ")
+    value = value.replace("hosts (.*):", "")
     return value
 
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
