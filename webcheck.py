@@ -31,8 +31,8 @@ def hostint(param, param1):
 
 for i in anshlist("all"):
     h_ip = ansvarinfo(i, "ansible_host")
-    ifinfo = hostint("ip", h_ip).json()
+    ifinfo = hostint("ip", h_ip).json()["result"]
     if ifinfo:
-        print(hostint("ip", h_ip).json())
+        print(ifinfo)
     else:
         print("Host", i, "not in zabbix")
