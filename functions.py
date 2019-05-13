@@ -6,7 +6,6 @@ import subprocess
 import re
 
 
-
 def conf_get(conf_file):
     conf_param = dict()
     with open(conf_file) as conf:
@@ -107,6 +106,16 @@ def anshlist(list):
     value = re.sub(" +", " ", value)
     value = value.split(" ")
     return value
+
+
+# def host_specs(inventory, hostname):
+#     if hostname in inventory:
+#         return inventory.get(hostname)
+#     for key, value in inventory.items():
+#         if isinstance(value,dict):
+#             item = host_specs(value, hostname)
+#             if item is not None:
+#                 return item
 
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
 
