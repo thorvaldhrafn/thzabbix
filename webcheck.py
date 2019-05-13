@@ -34,3 +34,5 @@ for i in anshlist("all"):
     ifinfo = hostint("ip", h_ip).json()
     if ifinfo:
         print(hostint("ip", h_ip).json())
+    else:
+        print("Host", i, "not in zabbix")
