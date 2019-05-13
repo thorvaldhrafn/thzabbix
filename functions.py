@@ -103,6 +103,7 @@ def anshlist(list):
     value = value.replace("\n", " ")
     value = re.sub("^.*hosts \(.*\):", "", value, count=1)
     value = re.sub("^ +", "", value)
+    value = re.sub(" +$", "", value)
     value = re.sub(" +", " ", value)
     value = value.split(" ")
     return value
