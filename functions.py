@@ -1,7 +1,6 @@
 import json
 import requests
 import os
-import yaml
 import sys
 import subprocess
 import re
@@ -98,8 +97,11 @@ def ansvarinfo(hostname, ansvar):
     return json.loads(value)[ansvar]
 
 
-def shell_stdout(sh_comm):
-    return os.popen(sh_comm).read()
+def anshlist(list):
+    param = ['ansible', '--list-hosts'] + [list]
+    value = subprocess.check_output(param)
+    value = value.replace("\n", " ")
+    return json.loads(value)
 
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
 

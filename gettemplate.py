@@ -1,7 +1,7 @@
 import json
 import requests
 
-from functions import url, authtock, headers, templateget, newhost_spec, hostname, hostget
+from functions import url, authtock, headers, templateget, hostget
 
 host_tmplt = newhost_spec[hostname]["zabbix_host_tmplt"]
 
