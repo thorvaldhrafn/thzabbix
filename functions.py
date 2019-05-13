@@ -106,7 +106,7 @@ def anshlist(list):
     value = re.sub(" +$", "", value)
     value = re.sub(" +", " ", value)
     value = value.split(" ")
-    return value
+    return len(value)
 
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
 
