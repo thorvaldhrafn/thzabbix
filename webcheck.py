@@ -31,4 +31,4 @@ def hostint(param, param1):
 
 for i in anshlist("all"):
     h_ip = ansvarinfo(i, "ansible_host")
-    print(hostint("ip", h_ip).json()["result"][0]["hostid"])
+    print(hostint("ip", h_ip).json())
