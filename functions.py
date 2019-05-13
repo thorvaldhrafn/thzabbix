@@ -102,6 +102,7 @@ def anshlist(list):
     value = subprocess.check_output(param)
     value = value.replace("\n", " ")
     value = re.sub("^.*hosts \(.*\):", "", value, count=1)
+    value = re.sub("[[:blank:]]", " ", value)
     return value
 
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
