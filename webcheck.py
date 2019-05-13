@@ -1,17 +1,17 @@
 import json
 import requests
 
-from functions import url, authtock, headers, templateget, hostget, hgroupget, anshlist
+from functions import url, authtock, headers, templateget, hostget, hgroupget, anshlist, ansvarinfo
 
 
-def hostint(param, param1):
-    paramslst = dict(output="extend")
-    paramsfilter = dict()
-    paramsfilter[param] = param1
-    paramslst["filter"] = paramsfilter
-    hostget = dict(jsonrpc="2.0", method="hostinterface.get", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(hostget), headers=headers)
+# def hostint(param, param1):
+#     paramslst = dict(output="extend")
+#     paramsfilter = dict()
+#     paramsfilter[param] = param1
+#     paramslst["filter"] = paramsfilter
+#     hostget = dict(jsonrpc="2.0", method="hostinterface.get", params=paramslst,
+#                    auth=authtock, id=1)
+#     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
 
 # group_id = hgroupget("name", "VPS linux servers").json()["result"][0]["groupid"]
@@ -29,4 +29,5 @@ def hostint(param, param1):
 
 # print(hostint("hostid", "10107").json())
 
-print(anshlist("all"))
+for i in anshlist("all"):
+    print(ansvarinfo(i, "ansible_host"))
