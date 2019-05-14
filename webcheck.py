@@ -14,7 +14,7 @@ def hostint(param, param1):
     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
 
-groupname = ansvarinfo("all", "zabbix_host_group")
+groupname = "VPS linux servers"
 group_id = hgroupget("name", groupname).json()["result"][0]["groupid"]
 
 # zcount = 0
@@ -30,7 +30,12 @@ group_id = hgroupget("name", groupname).json()["result"][0]["groupid"]
 
 # print(hostint("hostid", "10107").json())
 
-# for i in anshlist("all"):
+ans_hlist = anshlist("all")
+ans_hlist_ips = dict()
+for hst in ans_hlist:
+    ans_hlist_ips["hst"] = ansvarinfo(hst, "ansible_host")
+
+# for i in ans_hlist:
 #     h_ip = ansvarinfo(i, "ansible_host")
 #     ifinfo = hostint("ip", h_ip).json()["result"]
 #     if ifinfo:
@@ -38,4 +43,17 @@ group_id = hgroupget("name", groupname).json()["result"][0]["groupid"]
 #     else:
 #         print("Host", i, "not in zabbix")
 
-print((hostget("groupid", "group_id")).json())
+hquan = len((hostget("groupid", "group_id")).json()["result"])
+hpos = 0
+
+while hpos < hquan:
+    hpos_hostid = hostget("groupid", "group_id").json()["result"][hpos]["hostid"]
+    hpos_hostip = hostint("hostid", hpos_hostid).json()["result"][0]["ip"]
+    for anshst, h_ip in ans_hlist_ips.iteritems():
+        if h_ip == hpos_hostip:
+            print(anshst)
+            continue
+        else:
+            hname = hostget("hostid", hpos_hostid).json()["result"][0]["name"]
+            print(hname, "not found")
+    hpos += 1
