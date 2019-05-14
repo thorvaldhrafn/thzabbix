@@ -54,5 +54,5 @@ while hpos < hquan:
         if h_ip == hpos_hostip:
             break
     hname = hostget("hostid", hpos_hostid).json()["result"][0]["name"]
-    print(hname, "not found")
+    print(hname, hpos_hostip, "not found")
     hpos += 1
