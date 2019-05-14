@@ -53,6 +53,7 @@ while hpos < hquan:
     for anshst, h_ip in ans_hlist_ips.iteritems():
         if h_ip == hpos_hostip:
             break
-    hname = hostget("hostid", hpos_hostid).json()["result"][0]["name"]
-    print(hname, hpos_hostip, "not found")
+    else:
+        hname = hostget("hostid", hpos_hostid).json()["result"][0]["name"]
+        print(hname, hpos_hostip, "not found")
     hpos += 1
