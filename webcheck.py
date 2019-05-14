@@ -33,7 +33,9 @@ group_id = hgroupget("name", groupname).json()["result"][0]["groupid"]
 ans_hlist = anshlist("all")
 ans_hlist_ips = dict()
 for hst in ans_hlist:
-    ans_hlist_ips["hst"] = ansvarinfo(hst, "ansible_host")
+    ans_hlist_ips[hst] = ansvarinfo(hst, "ansible_host")
+
+print(ans_hlist_ips)
 
 # for i in ans_hlist:
 #     h_ip = ansvarinfo(i, "ansible_host")
@@ -45,9 +47,6 @@ for hst in ans_hlist:
 
 hquan = len((hostget("groupid", "group_id")).json()["result"])
 hpos = 0
-
-for anshst, h_ip in ans_hlist_ips.iteritems():
-    print(anshst, h_ip)
 
 # while hpos < hquan:
 #     hpos_hostid = hostget("groupid", "group_id").json()["result"][hpos]["hostid"]
