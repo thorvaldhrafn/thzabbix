@@ -51,7 +51,6 @@ while hpos < hquan:
     hpos_hostid = hostget("groupid", "group_id").json()["result"][hpos]["hostid"]
     hpos_hostip = hostint("hostid", hpos_hostid).json()["result"][0]["ip"]
     for anshst, h_ip in ans_hlist_ips.iteritems():
-        print(anshst, h_ip)
         if h_ip == hpos_hostip:
             break
     hname = hostget("hostid", hpos_hostid).json()["result"][0]["name"]
