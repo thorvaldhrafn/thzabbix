@@ -14,7 +14,8 @@ def hostint(param, param1):
     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
 
-# group_id = hgroupget("name", "VPS linux servers").json()["result"][0]["groupid"]
+groupname = ansvarinfo("all", "zabbix_host_group")
+group_id = hgroupget("name", groupname).json()["result"][0]["groupid"]
 
 # zcount = 0
 # while zcount < len(hostget("groupid", group_id).json()["result"]):
@@ -29,10 +30,12 @@ def hostint(param, param1):
 
 # print(hostint("hostid", "10107").json())
 
-for i in anshlist("all"):
-    h_ip = ansvarinfo(i, "ansible_host")
-    ifinfo = hostint("ip", h_ip).json()["result"]
-    if ifinfo:
-        print(ifinfo)
-    else:
-        print("Host", i, "not in zabbix")
+# for i in anshlist("all"):
+#     h_ip = ansvarinfo(i, "ansible_host")
+#     ifinfo = hostint("ip", h_ip).json()["result"]
+#     if ifinfo:
+#         print(ifinfo)
+#     else:
+#         print("Host", i, "not in zabbix")
+
+print((hostget("groupid", "group_id")).json())
