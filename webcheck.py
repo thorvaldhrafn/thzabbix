@@ -30,14 +30,18 @@ group_id = hgroupget("name", groupname).json()["result"][0]["groupid"]
 
 # print(hostint("hostid", "10107").json())
 
-ans_hlist = anshlist("all")
-ans_hlist_ips = dict()
-for hst in ans_hlist:
-    ans_hlist_ips[hst] = ansvarinfo(hst, "ansible_host")
+# ans_hlist = anshlist("all")
+# ans_hlist_ips = dict()
+# for hst in ans_hlist:
+#     ans_hlist_ips[hst] = ansvarinfo(hst, "ansible_host")
 
-for anshst, h_ip in ans_hlist_ips.iteritems():
-    shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
-    print(ansshell(shell_comm, anshst))
+# for anshst, h_ip in ans_hlist_ips.iteritems():
+#     shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
+#     print(ansshell(shell_comm, anshst))
+
+shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
+print(ansshell(shell_comm, "gridinsoft.com"))
+
 
 # for i in ans_hlist:
 #     h_ip = ansvarinfo(i, "ansible_host")

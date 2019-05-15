@@ -109,7 +109,7 @@ def anshlist(list):
 
 
 def ansshell(comm, hst):
-    param = ['ansible', 'b', "-m", "shell", "-a", "\'"] + [comm] + ["\'"] + [hst]
+    param = ['ansible', 'b', "-m", "shell", "-a"] + [comm] + [hst]
     value = subprocess.check_output(param)
     value = re.sub('^.*\{', '{', value, count=1)
     return value
