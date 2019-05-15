@@ -108,6 +108,13 @@ def anshlist(list):
     return value
 
 
+def ansshell(comm, hst):
+    param = ['ansible', 'b', "-m", "shell", "-a", "\'"] + [comm] + ["\'"] + [hst]
+    value = subprocess.check_output(param)
+    value = re.sub('^.*\{', '{', value, count=1)
+    return value
+
+
 # def host_specs(inventory, hostname):
 #     if hostname in inventory:
 #         return inventory.get(hostname)

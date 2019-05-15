@@ -1,7 +1,7 @@
 import json
 import requests
 
-from functions import url, authtock, headers, templateget, hostget, hgroupget, anshlist, ansvarinfo
+from functions import url, authtock, headers, hostget, hgroupget, anshlist, ansvarinfo, ansshell
 
 
 def hostint(param, param1):
@@ -35,6 +35,9 @@ ans_hlist_ips = dict()
 for hst in ans_hlist:
     ans_hlist_ips[hst] = ansvarinfo(hst, "ansible_host")
 
+for anshst, h_ip in ans_hlist_ips.iteritems():
+    shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
+    print(ansshell(shell_comm, anshst))
 
 # for i in ans_hlist:
 #     h_ip = ansvarinfo(i, "ansible_host")
@@ -44,16 +47,16 @@ for hst in ans_hlist:
 #     else:
 #         print("Host", i, "not in zabbix")
 
-hquan = len((hostget("groupid", "group_id")).json()["result"])
-hpos = 0
-
-while hpos < hquan:
-    hpos_hostid = hostget("groupid", "group_id").json()["result"][hpos]["hostid"]
-    hpos_hostip = hostint("hostid", hpos_hostid).json()["result"][0]["ip"]
-    for anshst, h_ip in ans_hlist_ips.iteritems():
-        if h_ip == hpos_hostip:
-            break
-    else:
-        hname = hostget("hostid", hpos_hostid).json()["result"][0]["name"]
-        print(hname, hpos_hostip, "not found")
-    hpos += 1
+# hquan = len((hostget("groupid", "group_id")).json()["result"])
+# hpos = 0
+#
+# while hpos < hquan:
+#     hpos_hostid = hostget("groupid", "group_id").json()["result"][hpos]["hostid"]
+#     hpos_hostip = hostint("hostid", hpos_hostid).json()["result"][0]["ip"]
+#     for anshst, h_ip in ans_hlist_ips.iteritems():
+#         if h_ip == hpos_hostip:
+#             break
+#     else:
+#         hname = hostget("hostid", hpos_hostid).json()["result"][0]["name"]
+#         print(hname, hpos_hostip, "not found")
+#     hpos += 1
