@@ -112,7 +112,8 @@ def ansshell(comm, hst):
     param = ['ansible', '-b', "-m", "shell", "-a"] + [comm] + [hst]
     value = subprocess.check_output(param)
     # value = value.replace("\n", " ")
-    # value = re.sub('^.*\{', '{', value, count=1)
+    value = re.sub('^.*\>\>.*$', '', value, count=1)
+    value = re.sub(' +$', '', value, count=1)
     return value
 
 
