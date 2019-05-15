@@ -39,7 +39,7 @@ group_id = hgroupget("name", groupname).json()["result"][0]["groupid"]
 #     shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
 #     print(ansshell(shell_comm, anshst))
 
-shell_comm = "/usr/local/thscripts/bin/ths-check-domain.sh"
+shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
 print(ansshell(shell_comm, "gridinsoft.com"))
 
 
