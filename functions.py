@@ -113,7 +113,8 @@ def ansshell(comm, hst):
     value = subprocess.check_output(param)
     value = re.sub('^.+stdout\) +', '', value, count=1)
     value = re.sub('\n +\n', '\n', value, count=1)
-    return value[:-1]
+    value = value.rstrip('\n')
+    return value
 
 
 # def host_specs(inventory, hostname):
