@@ -36,7 +36,7 @@ for hst in ans_hlist:
     ans_hlist_ips[hst] = ansvarinfo(hst, "ansible_host")
 
 for anshst, h_ip in ans_hlist_ips.iteritems():
-    shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
+    shell_comm = "bash /usr/local/thscripts/bin/ths-list-domains.sh"
     print(ansshell(shell_comm, anshst))
 
 # shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
