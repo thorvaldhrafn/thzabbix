@@ -37,7 +37,7 @@ for hst in ans_hlist:
 
 for anshst, h_ip in ans_hlist_ips.iteritems():
     shell_comm = "bash /usr/local/thscripts/bin/ths-list-domains.sh"
-    print(ansshell(shell_comm, anshst))
+    print(ansshell(shell_comm, anshst), h_ip)
 
 # shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
 # print(ansshell(shell_comm, "gridinsoft.com"))
