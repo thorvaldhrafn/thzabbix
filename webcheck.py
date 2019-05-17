@@ -37,6 +37,10 @@ for hst in ans_hlist:
 
 for anshst, h_ip in ans_hlist_ips.iteritems():
     shell_comm = "bash /usr/local/thscripts/bin/ths-list-domains.sh"
+    result = ansshell(shell_comm, anshst)
+    if type(result) is list:
+        print(result[1])
+        break
     print(h_ip, ansshell(shell_comm, anshst))
 
 print("End")
