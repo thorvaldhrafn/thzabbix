@@ -40,8 +40,8 @@ for anshst, h_ip in ans_hlist_ips.iteritems():
     result = ansshell(shell_comm, anshst)
     if type(result) is list:
         print(result[1])
-        break
-    print(h_ip, ansshell(shell_comm, anshst))
+    else:
+        print(h_ip, ansshell(shell_comm, anshst))
 
 print("End")
 
