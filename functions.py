@@ -116,7 +116,7 @@ def ansshell(comm, hst):
         value = re.sub('\n +\n', '\n', value, count=1)
         value = value.rstrip('\n')
     except subprocess.CalledProcessError, e:
-        return e.output
+        return "Error", e.output
     return value
 
 
