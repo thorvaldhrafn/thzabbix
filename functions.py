@@ -112,11 +112,11 @@ def ansshell(comm, hst):
     param = ['ansible', '-b', "-o", "-m", "shell", "-a"] + [comm] + [hst]
     try:
         value = subprocess.check_output(param)
+        value = re.sub('^.+stdout\) +', '', value, count=1)
+        value = re.sub('\n +\n', '\n', value, count=1)
+        value = value.rstrip('\n')
     except subprocess.CalledProcessError, e:
-        print(e.output)
-    value = re.sub('^.+stdout\) +', '', value, count=1)
-    value = re.sub('\n +\n', '\n', value, count=1)
-    value = value.rstrip('\n')
+        return e.output
     return value
 
 
