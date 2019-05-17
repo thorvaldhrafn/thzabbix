@@ -39,7 +39,7 @@ for anshst, h_ip in ans_hlist_ips.iteritems():
     shell_comm = "bash /usr/local/thscripts/bin/ths-list-domains.sh"
     result = ansshell(shell_comm, anshst)
     if isinstance(result,(list,)):
-        print(result[1])
+        print(result)
     else:
         print(h_ip, ansshell(shell_comm, anshst))
 
