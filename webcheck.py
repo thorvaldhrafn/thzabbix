@@ -35,11 +35,11 @@ ans_hlist_ips = dict()
 for hst in ans_hlist:
     ans_hlist_ips[hst] = ansvarinfo(hst, "ansible_host")
 
-print(ans_hlist_ips)
+for anshst, h_ip in ans_hlist_ips.iteritems():
+    shell_comm = "bash /usr/local/thscripts/bin/ths-list-domains.sh"
+    print(h_ip, ansshell(shell_comm, anshst))
 
-# for anshst, h_ip in ans_hlist_ips.iteritems():
-#     shell_comm = "bash /usr/local/thscripts/bin/ths-list-domains.sh"
-#     print(h_ip, ansshell(shell_comm, anshst))
+print("End"))
 
 # shell_comm = "bash /usr/local/thscripts/bin/ths-check-domain.sh"
 # print(ansshell(shell_comm, "gridinsoft.com"))
