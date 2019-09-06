@@ -131,6 +131,40 @@ def ansshell(comm, hst):
 #             if item is not None:
 #                 return item
 
+
+def hostint(param, param1):
+    paramslst = dict(output="extend")
+    paramsfilter = dict()
+    paramsfilter[param] = param1
+    paramslst["filter"] = paramsfilter
+    hostget = dict(jsonrpc="2.0", method="hostinterface.get", params=paramslst,
+                   auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(hostget), headers=headers)
+
+
+def histidbyip(host_ip):
+    host_id = hostint("ip", host_ip).json()["result"][0]["hostid"]
+    return host_id
+
+
+def httptestget(param, param1):
+    paramslst = dict(output="extend", selectSteps="extend")
+    paramsfilter = dict()
+    paramsfilter[param] = param1
+    paramslst["filter"] = paramsfilter
+    httptestget = dict(jsonrpc="2.0", method="httptest.get", params=paramslst,
+                   auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(httptestget), headers=headers)
+
+
+def httptestdel(param):
+    paramslst = dict()
+    paramslst[param] = param
+    httptestdel = dict(jsonrpc="2.0", method="httptest.delete", params=paramslst,
+                   auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(httptestdel), headers=headers)
+
+
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
 
 user = access_param["user"]
