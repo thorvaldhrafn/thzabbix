@@ -122,16 +122,6 @@ def ansshell(comm, hst):
     return value
 
 
-# def host_specs(inventory, hostname):
-#     if hostname in inventory:
-#         return inventory.get(hostname)
-#     for key, value in inventory.items():
-#         if isinstance(value,dict):
-#             item = host_specs(value, hostname)
-#             if item is not None:
-#                 return item
-
-
 def hostint(param, param1):
     paramslst = dict(output="extend")
     paramsfilter = dict()
@@ -142,9 +132,13 @@ def hostint(param, param1):
     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
 
-def histidbyip(host_ip):
-    host_id = hostint("ip", host_ip).json()["result"][0]["hostid"]
-    return host_id
+def hostidbyip(host_ip):
+    if len(hostint("ip", host_ip).json()["result"]) > 0:
+        host_id = hostint("ip", host_ip).json()["result"][0]["hostid"]
+        return host_id
+    else:
+        print("Host not found")
+        return False
 
 
 def httptestget(param, param1):
@@ -157,13 +151,26 @@ def httptestget(param, param1):
     return requests.post(url, data=json.dumps(httptestget), headers=headers)
 
 
-def httptestdel(param):
+def httptestdel(httptestid):
     paramslst = dict()
-    paramslst[param] = param
+    paramslst["httptestid"] = httptestid
     httptestdel = dict(jsonrpc="2.0", method="httptest.delete", params=paramslst,
                    auth=authtock, id=1)
     return requests.post(url, data=json.dumps(httptestdel), headers=headers)
 
+
+def httptestadd(**papams):
+    paramslst = dict(papams)
+    httptestget = dict(jsonrpc="2.0", method="httptest.create", params=paramslst,
+                   auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(httptestget), headers=headers)
+
+
+def httptestupd(**papams):
+    paramslst = dict(papams)
+    httptestget = dict(jsonrpc="2.0", method="httptest.update", params=paramslst,
+                   auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(httptestget), headers=headers)
 
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
 
