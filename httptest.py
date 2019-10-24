@@ -8,21 +8,20 @@ class HTTPtest(object):
     def __init__(self):
         self.delay = str("3m")
         self.timeout = str("30s")
-        self.follow_redirects = str("0")
+        self.follow_redirects = 0
 
     def _addparam(self, **add_params):
-        print(add_params)
         if not add_params.get("delay"):
             add_params["delay"] = self.delay
         if not add_params.get("timeout"):
             add_params["timeout"] = self.delay
         if not add_params.get("follow_redirects"):
-            add_params["follow_redirects"] = self.delay
+            add_params["follow_redirects"] = self.follow_redirects
         return add_params
 
     def httptest_addlist(self, **add_params):
         add_params = self._addparam(**add_params)
-        steps_dict = {"name": add_params["domain"], "url": add_params.pop("url"), "follow_redirects": add_params.pop("follow_redirects"), "timeout": add_params.pop("timeout"), "status_codes": add_params.pop("status_codes"), "no": str("1")}
+        steps_dict = {"name": add_params["name"], "url": add_params.pop("url"), "follow_redirects": add_params.pop("follow_redirects"), "timeout": add_params.pop("timeout"), "status_codes": add_params.pop("status_codes"), "no": str("1")}
         steps_list = list()
         steps_list.append(steps_dict)
         add_params["hostid"] = hostidbyip(add_params.pop("host_ip"))
@@ -65,7 +64,7 @@ class HTTPtest(object):
         return requests.post(url, data=json.dumps(triggadd), headers=headers)
 
     def httptestadd(self, **add_params):
-        hostname = hostget("hostid", hostidbyip(add_params["host_ip"]))
+        hostname = hostget("hostid", hostidbyip(add_params["host_ip"])).json()["result"][0]["name"]
         check_name = add_params["name"]
         paramslst = self.httptest_addlist(**add_params)
         httptestret = self._httptestadd(**paramslst).json()
