@@ -36,6 +36,13 @@ def hgroupget(param, param1):
     return requests.post(url, data=json.dumps(hostget), headers=headers)
 
 
+def trigget(**params):
+    paramslst = params
+    hostget = dict(jsonrpc="2.0", method="trigger.get", params=paramslst,
+                   auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(hostget), headers=headers)
+
+
 def templateget(param, param1):
     paramslst = dict(output="extend")
     paramsfilter = dict()
