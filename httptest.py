@@ -83,6 +83,11 @@ class HTTPtest(object):
         result.append(triggadd_ret)
         return result
 
+    def httptestdel(self, **del_params):
+        httptestid = del_params["httptestid"]
+        del_data = self._httptestdel(httptestid)
+        return del_data
+
     def httptestadd(self, **add_params):
         method = "httptest.create"
         return self._httptestfull(add_params, method)
