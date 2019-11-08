@@ -6,6 +6,32 @@ import subprocess
 import re
 
 
+class zabbReq(object):
+    def __init__(self, creds):
+        self.headers = {'content-type': 'application/json-rpc'}
+        self.url = creds["url"]
+        self.authdata = dict(jsonrpc="2.0", method="user.login",
+                             params=dict(user=creds["user"], password=creds["passwd"]), id="1")
+        self.authtock = requests.post(self.url, data=json.dumps(self.authdata), headers=self.headers).json()["result"]
+        self.basedata = dict(jsonrpc="2.0", auth=self.authtock, id=1)
+
+    def req_post(self, req_data):
+        full_data = self.basedata.copy()
+        full_data["method"] = req_data["method"]
+        full_data["params"] = req_data["data"]
+        return requests.post(self.url, data=json.dumps(full_data), headers=self.headers).json()
+
+    def hostidbyip(self, host_ip):
+        find_data = dict(filter=dict(ip=host_ip))
+        res_req = self.req_post(dict(data=find_data, method="hostinterface.get"))["result"]
+        if len(res_req) > 0:
+            host_id =res_req[0]["hostid"]
+            return host_id
+        else:
+            print("Host not found")
+            return False
+
+
 def conf_get(conf_file):
     conf_param = dict()
     with open(conf_file) as conf:
