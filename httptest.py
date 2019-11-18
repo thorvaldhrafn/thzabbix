@@ -92,7 +92,7 @@ class HTTPtest(object):
         method = "httptest.create"
         return self._httptestfull(add_params, method)
 
-    def httptestupd(self, **upd_params):
+    def httptestupd(self, upd_params):
         method = "httptest.update"
         return self._httptestfull(upd_params, method)
 
