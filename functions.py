@@ -12,7 +12,7 @@ class zabbReq(object):
         self.url = creds["url"]
         self.authdata = dict(jsonrpc="2.0", method="user.login",
                              params=dict(user=creds["user"], password=creds["passwd"]), id="1")
-        self.authtock = requests.post(self.url, data=json.dumps(self.authdata), headers=self.headers).json()
+        self.authtock = requests.post(self.url, data=json.dumps(self.authdata), headers=self.headers)
         print(self.authtock)
         # self.authtock = requests.post(self.url, data=json.dumps(self.authdata), headers=self.headers).json()["result"]
         self.basedata = dict(jsonrpc="2.0", auth=self.authtock, id=1)
