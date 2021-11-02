@@ -6,7 +6,7 @@ import subprocess
 import re
 
 
-class zabbReq(object):
+class ZabbReq(object):
     def __init__(self, creds):
         self.headers = {'content-type': 'application/json-rpc'}
         self.url = creds["url"]
@@ -25,7 +25,7 @@ class zabbReq(object):
         find_data = dict(filter=dict(ip=host_ip))
         res_req = self.req_post(dict(data=find_data, method="hostinterface.get"))["result"]
         if len(res_req) > 0:
-            host_id =res_req[0]["hostid"]
+            host_id = res_req[0]["hostid"]
             return host_id
         else:
             print("Host not found")
@@ -47,9 +47,8 @@ def hostget(param, param1):
     paramsfilter = dict()
     paramsfilter[param] = param1
     paramslst["filter"] = paramsfilter
-    hostget = dict(jsonrpc="2.0", method="host.get", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(hostget), headers=headers)
+    host_get = dict(jsonrpc="2.0", method="host.get", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(host_get), headers=headers)
 
 
 def hgroupget(param, param1):
@@ -57,16 +56,14 @@ def hgroupget(param, param1):
     paramsfilter = dict()
     paramsfilter[param] = param1
     paramslst["filter"] = paramsfilter
-    hostget = dict(jsonrpc="2.0", method="hostgroup.get", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(hostget), headers=headers)
+    host_get = dict(jsonrpc="2.0", method="hostgroup.get", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(host_get), headers=headers)
 
 
 def trigget(**params):
     paramslst = params
-    hostget = dict(jsonrpc="2.0", method="trigger.get", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(hostget), headers=headers)
+    host_get = dict(jsonrpc="2.0", method="trigger.get", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(host_get), headers=headers)
 
 
 def templateget(param, param1):
@@ -74,9 +71,8 @@ def templateget(param, param1):
     paramsfilter = dict()
     paramsfilter[param] = param1
     paramslst["filter"] = paramsfilter
-    hostget = dict(jsonrpc="2.0", method="template.get", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(hostget), headers=headers)
+    host_get = dict(jsonrpc="2.0", method="template.get", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(host_get), headers=headers)
 
 
 def graphinfo(hostid, graph_name):
@@ -125,15 +121,16 @@ def ansvarinfo(hostname, ansvar):
     var_sring = "var=" + ansvar
     param = ['ansible', '-o', '-m', 'debug'] + [hostname] + ['-a'] + [var_sring]
     value = subprocess.check_output(param)
-    value = re.sub('^.*\{', '{', value, count=1)
+    value = re.sub('^.*{', '{', value, count=1)
     return json.loads(value)[ansvar]
 
 
-def anshlist(list):
-    param = ['ansible', '--list-hosts'] + [list]
-    value = subprocess.check_output(param)
-    value = value.replace("\n", " ")
-    value = re.sub("^.*hosts \(.*\):", "", value, count=1)
+def anshlist(list_h):
+    param = ['ansible', '--list-hosts'] + [list_h]
+    output = subprocess.Popen(param, shell=True, stdout=subprocess.PIPE)
+    value = output.communicate()[0].decode('utf-8')
+    value = str(value).strip()
+    value = re.sub("^.*hosts (.*):", "", value, count=1)
     value = re.sub("^ +", "", value)
     value = re.sub(" +$", "", value)
     value = re.sub(" +", " ", value)
@@ -160,9 +157,8 @@ def hostint(param, param1):
     paramsfilter = dict()
     paramsfilter[param] = param1
     paramslst["filter"] = paramsfilter
-    hostget = dict(jsonrpc="2.0", method="hostinterface.get", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(hostget), headers=headers)
+    host_get = dict(jsonrpc="2.0", method="hostinterface.get", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(host_get), headers=headers)
 
 
 def hostidbyip(host_ip):
@@ -179,31 +175,28 @@ def httptestget(param, param1):
     paramsfilter = dict()
     paramsfilter[param] = param1
     paramslst["filter"] = paramsfilter
-    httptestget = dict(jsonrpc="2.0", method="httptest.get", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(httptestget), headers=headers)
+    httptest_get = dict(jsonrpc="2.0", method="httptest.get", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(httptest_get), headers=headers)
 
 
 def httptestdel(httptestid):
     paramslst = dict()
     paramslst["httptestid"] = httptestid
-    httptestdel = dict(jsonrpc="2.0", method="httptest.delete", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(httptestdel), headers=headers)
+    httptest_del = dict(jsonrpc="2.0", method="httptest.delete", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(httptest_del), headers=headers)
 
 
 def httptestadd(**papams):
     paramslst = dict(papams)
-    httptestget = dict(jsonrpc="2.0", method="httptest.create", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(httptestget), headers=headers)
+    httptest_get = dict(jsonrpc="2.0", method="httptest.create", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(httptest_get), headers=headers)
 
 
 def httptestupd(**papams):
     paramslst = dict(papams)
-    httptestget = dict(jsonrpc="2.0", method="httptest.update", params=paramslst,
-                   auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(httptestget), headers=headers)
+    httptest_get = dict(jsonrpc="2.0", method="httptest.update", params=paramslst, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(httptest_get), headers=headers)
+
 
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
 
@@ -216,4 +209,4 @@ headers = {'content-type': 'application/json-rpc'}
 
 auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
 
-# authtock = auth_req.json()["result"]
+authtock = auth_req.json()["result"]
