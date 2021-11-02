@@ -209,5 +209,5 @@ headers = {'content-type': 'application/json-rpc'}
 
 auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
 
-print(auth_req.status_code)
+print(auth_req.content)
 authtock = auth_req.json()["result"]
