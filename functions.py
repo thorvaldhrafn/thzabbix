@@ -204,10 +204,9 @@ user = access_param["user"]
 passwd = access_param["passwd"]
 url = access_param["url"]
 
-authdata = {"jsonrpc": "2.0", "method": "user.login", "params": {"user": user, "password": passwd}, "id": "1", "auth": ""}
+authdata = {"jsonrpc": "2.0", "method": "user.login", "params": {"user": user, "password": passwd}, "id": "1"}
 headers = {'content-type': 'application/json-rpc'}
 
 auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
 
-print(auth_req.content)
 authtock = auth_req.json()["result"]
