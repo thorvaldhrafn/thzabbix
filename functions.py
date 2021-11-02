@@ -148,7 +148,7 @@ def ansshell(comm, hst):
         value = re.sub('^.+stdout\) +', '', value, count=1)
         value = re.sub('\n +\n', '\n', value, count=1)
         value = value.rstrip('\n')
-    except subprocess.CalledProcessError, e:
+    except subprocess.CalledProcessError as e:
         error_lst = ['Error']
         error_lst = error_lst.append(e.output)
         return error_lst
