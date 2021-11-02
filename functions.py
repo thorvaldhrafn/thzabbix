@@ -120,7 +120,8 @@ def shell_stdout(sh_comm):
 def ansvarinfo(hostname, ansvar):
     var_sring = "var=" + ansvar
     param = ['ansible', '-o', '-m', 'debug'] + [hostname] + ['-a'] + [var_sring]
-    value = subprocess.check_output(param)
+    output = subprocess.Popen(param, shell=True, stdout=subprocess.PIPE)
+    value = output.communicate()[0].decode('utf-8')
     value = re.sub('^.*{', '{', value, count=1)
     return json.loads(value)[ansvar]
 
@@ -141,7 +142,8 @@ def anshlist(list_h):
 def ansshell(comm, hst):
     param = ['ansible', '-b', "-o", "-m", "shell", "-a"] + [comm] + [hst]
     try:
-        value = subprocess.check_output(param)
+        output = subprocess.Popen(param, shell=True, stdout=subprocess.PIPE)
+        value = output.communicate()[0].decode('utf-8')
         value = re.sub('^.+stdout\) +', '', value, count=1)
         value = re.sub('\n +\n', '\n', value, count=1)
         value = value.rstrip('\n')
