@@ -204,7 +204,7 @@ user = access_param["user"]
 passwd = access_param["passwd"]
 url = access_param["url"]
 
-authdata = {"jsonrpc": "2.0", "method": "user.login", "params": {"user": user, "password": passwd}, "id": "1"}
+authdata = {"jsonrpc": "2.0", "method": "user.login", "params": {"user": user, "password": passwd}, "id": "1", "auth": ""}
 headers = {'content-type': 'application/json-rpc'}
 
 auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
