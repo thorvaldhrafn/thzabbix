@@ -37,6 +37,7 @@ class HTTPtest(object):
         return add_params
 
     def _httptest_updlist(self, upd_params):
+        print(upd_params)
         upd_params = self._addparam(upd_params)
         full_params = dict(httptestid=upd_params.pop("httptestid"), delay=upd_params.pop("delay"))
         steps_dict = upd_params
@@ -76,7 +77,7 @@ class HTTPtest(object):
         test_add_data = self.basedata.copy()
         test_add_data["params"] = paramslst
         test_add_data["method"] = method
-        print(test_add_data)
+        # print(test_add_data)
         httptestret = self._req_post(test_add_data).json()
         triggadd_ret = self._trigg_add(check_name, hostname).json()
         result = list()
