@@ -48,13 +48,6 @@ class HTTPtest(object):
         full_params["retries"] = self.retr
         return full_params
 
-    def _httptestdel(self, httptestid):
-        paramslst = dict(httptestid=httptestid)
-        full_data = self.basedata.copy()
-        full_data["params"] = paramslst
-        full_data["method"] = "httptest.delete"
-        return self._req_post(full_data)
-
     def _trigg_add(self, name, host):
         trigg_descr = str("Web scenario " + name + " failed: {ITEM.VALUE}")
         trigg_expr = str("length(last(/" + host + "/web.test.error[" + name + "]))>0 and last(/" + host + "/web.test.fail[" + name + "])>0")
@@ -86,8 +79,11 @@ class HTTPtest(object):
         return result
 
     def httptestdel(self, del_params):
-        httptestid = del_params["httptestid"]
-        del_data = self._httptestdel(httptestid)
+        paramslst = dict(httptestid=del_params["httptestid"])
+        full_data = self.basedata.copy()
+        full_data["params"] = paramslst
+        full_data["method"] = "httptest.delete"
+        del_data = self._req_post(full_data)
         return del_data
 
     def httptestadd(self, add_params):
