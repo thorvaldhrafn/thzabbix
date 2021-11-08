@@ -13,6 +13,7 @@ class HTTPtest(object):
         self.basedata = dict(jsonrpc="2.0", auth=self.authtock, id=1)
         self.delay = str("3m")
         self.timeout = str("30s")
+        self.retr = 3
         self.follow_redirects = 0
 
     def _req_post(self, req_data):
@@ -44,6 +45,7 @@ class HTTPtest(object):
         steps_list = list()
         steps_list.append(steps_dict)
         full_params["steps"] = steps_list
+        full_params["retries"] = self.retr
         return full_params
 
     def _httptestdel(self, httptestid):
