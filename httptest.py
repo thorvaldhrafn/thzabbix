@@ -18,7 +18,7 @@ class HTTPtest(object):
     def _req_post(self, req_data):
         return requests.post(self.url, data=json.dumps(req_data), headers=self.headers)
 
-    def _addparam(self, **add_params):
+    def _addparam(self, add_params):
         if not add_params.get("delay"):
             add_params["delay"] = self.delay
         if not add_params.get("timeout"):
@@ -27,8 +27,8 @@ class HTTPtest(object):
             add_params["follow_redirects"] = self.follow_redirects
         return add_params
 
-    def _httptest_addlist(self, **add_params):
-        add_params = self._addparam(**add_params)
+    def _httptest_addlist(self, add_params):
+        add_params = self._addparam(add_params)
         steps_dict = dict(name=add_params["name"], url=add_params.pop("url"), follow_redirects=add_params.pop("follow_redirects"), timeout=add_params.pop("timeout"), status_codes=add_params.pop("status_codes"), no=str("1"))
         steps_list = list()
         steps_list.append(steps_dict)
@@ -36,8 +36,8 @@ class HTTPtest(object):
         add_params["steps"] = steps_list
         return add_params
 
-    def _httptest_updlist(self, **upd_params):
-        upd_params = self._addparam(**upd_params)
+    def _httptest_updlist(self, upd_params):
+        upd_params = self._addparam(upd_params)
         full_params = dict(httptestid=upd_params.pop("httptestid"), delay=upd_params.pop("delay"))
         steps_dict = upd_params
         steps_dict["no"] = str("1")
@@ -76,6 +76,7 @@ class HTTPtest(object):
         test_add_data = self.basedata.copy()
         test_add_data["params"] = paramslst
         test_add_data["method"] = method
+        print(test_add_data)
         httptestret = self._req_post(test_add_data).json()
         triggadd_ret = self._trigg_add(check_name, hostname).json()
         result = list()
