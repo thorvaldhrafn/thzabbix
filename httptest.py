@@ -71,7 +71,7 @@ class HTTPtest(object):
             paramslst = self._httptest_addlist(**params)
         elif method == "httptest.update":
             del params["host_ip"]
-            paramslst = self._httptest_updlist(**params)
+            paramslst = self._httptest_updlist(params)
         else:
             return False
         test_add_data = self.basedata.copy()
