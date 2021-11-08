@@ -57,7 +57,7 @@ class HTTPtest(object):
 
     def _trigg_add(self, name, host):
         trigg_descr = str("Web scenario " + name + " failed: {ITEM.VALUE}")
-        trigg_expr = str("{" + host + ":web.test.error[" + name + "].strlen()}>0 and {" + host + ":web.test.fail[" + name + "].last()}>0")
+        trigg_expr = str("length(last(/" + host + "/web.test.error[" + name + "]))>0 and last(/" + host + "/web.test.fail[" + name + "])>0")
         paramslst = dict(description=trigg_descr, expression=trigg_expr, priority=4)
         full_data = self.basedata.copy()
         full_data["params"] = paramslst
