@@ -1,7 +1,7 @@
 import json
 import requests
 
-from functions import hostidbyip
+from .functions import hostidbyip
 
 
 class HTTPtest(object):
