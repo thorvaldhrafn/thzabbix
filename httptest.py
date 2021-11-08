@@ -67,7 +67,7 @@ class HTTPtest(object):
         hostname = self.hostget(dict(hostid=host_id))["name"]
         check_name = params["name"]
         if method == "httptest.create":
-            paramslst = self._httptest_addlist(**params)
+            paramslst = self._httptest_addlist(params)
         elif method == "httptest.update":
             del params["host_ip"]
             paramslst = self._httptest_updlist(params)
