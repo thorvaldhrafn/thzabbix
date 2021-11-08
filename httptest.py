@@ -78,8 +78,8 @@ class HTTPtest(object):
         result.append(triggadd_ret)
         return result
 
-    def httptestdel(self, del_params):
-        paramslst = dict(httptestid=del_params["httptestid"])
+    def httptestdel(self, del_testid):
+        paramslst = dict(httptestid=del_testid)
         full_data = self.basedata.copy()
         full_data["params"] = paramslst
         full_data["method"] = "httptest.delete"
