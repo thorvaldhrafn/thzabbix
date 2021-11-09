@@ -121,17 +121,17 @@ def httptestget(param, param1):
 def addhost(hcreatedata):
     addhost_get = dict(jsonrpc="2.0", method="host.create", params=hcreatedata, auth=authtock, id=1)
     return requests.post(url, data=json.dumps(addhost_get), headers=headers)
-
-
-access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
-
-user = access_param["user"]
-passwd = access_param["passwd"]
-url = access_param["url"]
-
-authdata = {"jsonrpc": "2.0", "method": "user.login", "params": {"user": user, "password": passwd}, "id": "1"}
-headers = {'content-type': 'application/json-rpc'}
-
-auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
-
-authtock = auth_req.json()["result"]
+#
+#
+# access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
+#
+# user = access_param["user"]
+# passwd = access_param["passwd"]
+# url = access_param["url"]
+#
+# authdata = {"jsonrpc": "2.0", "method": "user.login", "params": {"user": user, "password": passwd}, "id": "1"}
+# headers = {'content-type': 'application/json-rpc'}
+#
+# auth_req = requests.post(url, data=json.dumps(authdata), headers=headers)
+#
+# authtock = auth_req.json()["result"]
