@@ -120,7 +120,6 @@ def shell_stdout(sh_comm):
 def ansvarinfo(hostname, ansvar):
     var_sring = "var=" + ansvar
     param = str("ansible -o -m debug " + hostname + " -a " + var_sring)
-    print(param)
     output = subprocess.Popen(param, shell=True, stdout=subprocess.PIPE)
     value = output.communicate()[0].decode('utf-8')
     value = re.sub('^.*{', '{', value, count=1)
