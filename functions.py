@@ -46,11 +46,11 @@ class ZabbReq(object):
             method_rst = "httptest.get"
         else:
             return False
-        host_get = dict(method=method_rst, params=paramslst)
+        host_get = dict(method=method_rst, data=paramslst)
         return self.req_post(host_get)
 
     def addhost(self, hcreatedata):
-        addhost_get = dict(method="host.create", params=hcreatedata)
+        addhost_get = dict(method="host.create", data=hcreatedata)
         return self.req_post(addhost_get)
 
 
