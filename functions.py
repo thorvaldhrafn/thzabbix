@@ -2,8 +2,6 @@ import json
 import requests
 import os
 import sys
-import subprocess
-import re
 
 
 class ZabbReq(object):
@@ -60,9 +58,8 @@ def hgroupget(param, param1):
     return requests.post(url, data=json.dumps(host_get), headers=headers)
 
 
-def trigget(**params):
-    paramslst = params
-    host_get = dict(jsonrpc="2.0", method="trigger.get", params=paramslst, auth=authtock, id=1)
+def trigget(params):
+    host_get = dict(jsonrpc="2.0", method="trigger.get", params=params, auth=authtock, id=1)
     return requests.post(url, data=json.dumps(host_get), headers=headers)
 
 
@@ -73,85 +70,6 @@ def templateget(param, param1):
     paramslst["filter"] = paramsfilter
     host_get = dict(jsonrpc="2.0", method="template.get", params=paramslst, auth=authtock, id=1)
     return requests.post(url, data=json.dumps(host_get), headers=headers)
-
-
-def graphinfo(hostid, graph_name):
-    paramslst = dict(output="extend")
-    paramslst["hostids"] = hostid
-    paramslst["filter"] = dict(name=graph_name)
-    graphgetall = dict(jsonrpc="2.0", method="graph.get", params=paramslst,
-                       auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(graphgetall), headers=headers)
-
-
-def graphinfo_id(graphid):
-    paramslst = dict(output="extend")
-    paramslst["filter"] = dict(graphid=graphid)
-    graphgetall = dict(jsonrpc="2.0", method="graph.get", params=paramslst,
-                       auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(graphgetall), headers=headers)
-
-
-def screeninfo(screenname):
-    paramslst = dict(output="extend")
-    paramslst["filter"] = dict(name=screenname)
-    screengetall = dict(jsonrpc="2.0", method="screen.get", params=paramslst,
-                        auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(screengetall), headers=headers)
-
-
-def screeniteminfo(screen_id, hpos, vprevpos):
-    paramslst = dict(output="extend")
-    paramslst["screenids"] = screen_id
-    paramslst["filter"] = dict(x=hpos, y=vprevpos)
-    screenitemgetall = dict(jsonrpc="2.0", method="screenitem.get", params=paramslst,
-                            auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(screenitemgetall), headers=headers)
-
-
-def shell_comm(sh_comm):
-    return os.system(sh_comm)
-
-
-def shell_stdout(sh_comm):
-    return os.popen(sh_comm).read()
-
-
-def ansvarinfo(hostname, ansvar):
-    var_sring = "var=" + ansvar
-    param = str("ansible -o -m debug " + hostname + " -a " + var_sring)
-    output = subprocess.Popen(param, shell=True, stdout=subprocess.PIPE)
-    value = output.communicate()[0].decode('utf-8')
-    value = re.sub('^.*{', '{', value, count=1)
-    return json.loads(value)[ansvar]
-
-
-def anshlist(list_h):
-    param = str("ansible --list-hosts " + list_h)
-    output = subprocess.Popen(param, shell=True, stdout=subprocess.PIPE)
-    value = output.communicate()[0].decode('utf-8')
-    value = str(value).strip()
-    value = re.sub("^.*hosts (.*):", "", value, count=1)
-    value = re.sub("^ +", "", value)
-    value = re.sub(" +$", "", value)
-    value = re.sub(" +", " ", value)
-    value = value.split(" ")
-    return value
-
-
-def ansshell(comm, hst):
-    param = str("ansible -b -o -m shell -a " + comm + " " + hst)
-    try:
-        output = subprocess.Popen(param, shell=True, stdout=subprocess.PIPE)
-        value = output.communicate()[0].decode('utf-8')
-        value = re.sub('^.+stdout\) +', '', value, count=1)
-        value = re.sub('\n +\n', '\n', value, count=1)
-        value = value.rstrip('\n')
-    except subprocess.CalledProcessError as e:
-        error_lst = ['Error']
-        error_lst = error_lst.append(e.output)
-        return error_lst
-    return value
 
 
 def hostint(param, param1):
@@ -181,23 +99,9 @@ def httptestget(param, param1):
     return requests.post(url, data=json.dumps(httptest_get), headers=headers)
 
 
-def httptestdel(httptestid):
-    paramslst = dict()
-    paramslst["httptestid"] = httptestid
-    httptest_del = dict(jsonrpc="2.0", method="httptest.delete", params=paramslst, auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(httptest_del), headers=headers)
-
-
-def httptestadd(**papams):
-    paramslst = dict(papams)
-    httptest_get = dict(jsonrpc="2.0", method="httptest.create", params=paramslst, auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(httptest_get), headers=headers)
-
-
-def httptestupd(**papams):
-    paramslst = dict(papams)
-    httptest_get = dict(jsonrpc="2.0", method="httptest.update", params=paramslst, auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(httptest_get), headers=headers)
+def addhost(hcreatedata):
+    addhost_get = dict(jsonrpc="2.0", method="host.create", params=hcreatedata, auth=authtock, id=1)
+    return requests.post(url, data=json.dumps(addhost_get), headers=headers)
 
 
 access_param = conf_get(os.path.dirname(sys.argv[0]) + "/access.conf")
