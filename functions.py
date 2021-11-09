@@ -29,7 +29,7 @@ class ZabbReq(object):
             print("Host not found")
             return False
 
-    def lf_data(self, method_get, param, param1, ):
+    def lf_data(self, method_get, param, param1):
         paramslst = dict(output="extend")
         paramsfilter = dict()
         paramsfilter[param] = param1
