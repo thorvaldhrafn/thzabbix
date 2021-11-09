@@ -29,6 +29,30 @@ class ZabbReq(object):
             print("Host not found")
             return False
 
+    def lf_data(self, method_get, param, param1, ):
+        paramslst = dict(output="extend")
+        paramsfilter = dict()
+        paramsfilter[param] = param1
+        paramslst["filter"] = paramsfilter
+        if method_get == "host":
+            method_rst = "host.get"
+        elif method_get == "hostgroup":
+            method_rst = "hostgroup.get"
+        elif method_get == "template":
+            method_rst = "template.get"
+        elif method_get == "hostinterface":
+            method_rst = "hostinterface.get"
+        elif method_get == "httptest":
+            method_rst = "httptest.get"
+        else:
+            return False
+        host_get = dict(method=method_rst, params=paramslst)
+        return self.req_post(host_get)
+
+    def addhost(self, hcreatedata):
+        addhost_get = dict(method="host.create", params=hcreatedata)
+        return self.req_post(addhost_get)
+
 
 def conf_get(conf_file):
     conf_param = dict()
@@ -55,11 +79,6 @@ def hgroupget(param, param1):
     paramsfilter[param] = param1
     paramslst["filter"] = paramsfilter
     host_get = dict(jsonrpc="2.0", method="hostgroup.get", params=paramslst, auth=authtock, id=1)
-    return requests.post(url, data=json.dumps(host_get), headers=headers)
-
-
-def trigget(params):
-    host_get = dict(jsonrpc="2.0", method="trigger.get", params=params, auth=authtock, id=1)
     return requests.post(url, data=json.dumps(host_get), headers=headers)
 
 
