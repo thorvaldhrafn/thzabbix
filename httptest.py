@@ -1,7 +1,7 @@
 import json
 import requests
 
-from .functions import hostidbyip
+from .functions import ZabbReq
 
 
 class HTTPtest(object):
@@ -15,6 +15,7 @@ class HTTPtest(object):
         self.timeout = str("30s")
         self.retr = 3
         self.follow_redirects = 0
+        self.zabb_req = ZabbReq(creds)
 
     def _req_post(self, req_data):
         return requests.post(self.url, data=json.dumps(req_data), headers=self.headers)
@@ -33,7 +34,7 @@ class HTTPtest(object):
         steps_dict = dict(name=add_params["name"], url=add_params.pop("url"), follow_redirects=add_params.pop("follow_redirects"), timeout=add_params.pop("timeout"), status_codes=add_params.pop("status_codes"), no=str("1"))
         steps_list = list()
         steps_list.append(steps_dict)
-        add_params["hostid"] = hostidbyip(add_params.pop("host_ip"))
+        add_params["hostid"] = self.zabb_req.hostidbyip(add_params.pop("host_ip"))
         add_params["steps"] = steps_list
         return add_params
 
@@ -58,7 +59,7 @@ class HTTPtest(object):
         return self._req_post(full_data)
 
     def _httptestfull(self, params, method):
-        host_id = hostidbyip(params["host_ip"])
+        host_id = self.zabb_req.hostidbyip(params["host_ip"])
         hostname = self.hostget(dict(hostid=host_id))["name"]
         check_name = params["name"]
         if method == "httptest.create":
