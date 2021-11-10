@@ -43,6 +43,7 @@ class ZabbReq(object):
         elif method_get == "hostinterface":
             method_rst = "hostinterface.get"
         elif method_get == "httptest":
+            paramslst = dict(output="extend", selectSteps="extend")
             method_rst = "httptest.get"
         else:
             return False
