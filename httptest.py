@@ -57,7 +57,6 @@ class HTTPtest(object):
         full_data = self.basedata.copy()
         full_data["params"] = paramslst
         full_data["method"] = "trigger.create"
-        print(full_data)
         return self._req_post(full_data)
 
     def _httptestfull(self, params, method):
