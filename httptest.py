@@ -64,7 +64,10 @@ class HTTPtest(object):
         check_name = params["name"]
         params = self._addparam(params)
         host_id = self.zabb_req.hostidbyip(params["host_ip"])
+        hostname = self.hostget(dict(hostid=host_id))["name"]
         del params["host_ip"]
+        if method == "httptest.create":
+            params["hostid"] = host_id
         if method != "httptest.create" and method != "httptest.update":
             return False
         test_add_data = self.basedata.copy()
@@ -74,8 +77,6 @@ class HTTPtest(object):
         result = list()
         result.append(httptestret)
         if method == "httptest.create":
-            hostname = self.hostget(dict(hostid=host_id))["name"]
-            params["hostid"] = host_id
             triggadd_ret = self._trigg_add(check_name, hostname).json()
             result.append(triggadd_ret)
         return result
