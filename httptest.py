@@ -73,6 +73,7 @@ class HTTPtest(object):
         test_add_data = self.basedata.copy()
         test_add_data["params"] = params
         test_add_data["method"] = method
+        print(test_add_data)
         httptestret = self._req_post(test_add_data).json()
         triggadd_ret = self._trigg_add(check_name, hostname).json()
         result = list()
