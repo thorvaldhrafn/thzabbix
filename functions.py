@@ -33,7 +33,6 @@ class ZabbReq(object):
         paramslst = dict(output="extend")
         paramsfilter = dict()
         paramsfilter[param] = param1
-        paramslst["filter"] = paramsfilter
         if method_get == "host":
             method_rst = "host.get"
         elif method_get == "hostgroup":
@@ -43,10 +42,11 @@ class ZabbReq(object):
         elif method_get == "hostinterface":
             method_rst = "hostinterface.get"
         elif method_get == "httptest":
-            paramslst = dict(output="extend", selectSteps="extend")
+            paramslst = dict(output="extend", selectSteps="extend", selectTags="extend")
             method_rst = "httptest.get"
         else:
             return False
+        paramslst["filter"] = paramsfilter
         host_get = dict(method=method_rst, data=paramslst)
         return self.req_post(host_get)
 
