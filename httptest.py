@@ -23,10 +23,11 @@ class HTTPtest(object):
     def _addparam(self, add_params):
         if not add_params.get("delay"):
             add_params["delay"] = self.delay
-        if not add_params.get("timeout"):
-            add_params["timeout"] = self.delay
         if not add_params.get("follow_redirects"):
             add_params["follow_redirects"] = self.follow_redirects
+        for step in add_params["steps"]:
+            if not step.get("timeout"):
+                step["timeout"] = self.timeout
         return add_params
 
     def _httptest_addlist(self, add_params):
@@ -62,15 +63,14 @@ class HTTPtest(object):
         host_id = self.zabb_req.hostidbyip(params["host_ip"])
         hostname = self.hostget(dict(hostid=host_id))["name"]
         check_name = params["name"]
-        if method == "httptest.create":
-            paramslst = self._httptest_addlist(params)
-        elif method == "httptest.update":
-            del params["host_ip"]
-            paramslst = self._httptest_updlist(params)
-        else:
+        # if method == "httptest.create":
+        #     paramslst = self._httptest_addlist(params)
+        # elif method == "httptest.update":
+        #     paramslst = self._httptest_updlist(params)
+        if method != "httptest.create" or method != "httptest.update":
             return False
         test_add_data = self.basedata.copy()
-        test_add_data["params"] = paramslst
+        test_add_data["params"] = params
         test_add_data["method"] = method
         httptestret = self._req_post(test_add_data).json()
         triggadd_ret = self._trigg_add(check_name, hostname).json()
