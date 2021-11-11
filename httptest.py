@@ -69,7 +69,7 @@ class HTTPtest(object):
         #     paramslst = self._httptest_addlist(params)
         # elif method == "httptest.update":
         #     paramslst = self._httptest_updlist(params)
-        if method != "httptest.create" or method != "httptest.update":
+        if method != "httptest.create" and method != "httptest.update":
             return False
         test_add_data = self.basedata.copy()
         test_add_data["params"] = params
