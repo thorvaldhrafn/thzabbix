@@ -63,6 +63,7 @@ class HTTPtest(object):
         host_id = self.zabb_req.hostidbyip(params["host_ip"])
         hostname = self.hostget(dict(hostid=host_id))["name"]
         check_name = params["name"]
+        params = self._addparam(params)
         # if method == "httptest.create":
         #     paramslst = self._httptest_addlist(params)
         # elif method == "httptest.update":
