@@ -74,15 +74,15 @@ class HTTPtest(object):
         test_add_data = self.basedata.copy()
         test_add_data["params"] = params
         test_add_data["method"] = method
-        print(test_add_data)
-        httptestret = self._req_post(test_add_data).json()
-        result = list()
-        result.append(httptestret)
-        try:
-            result.append(triggadd_ret)
-        except NameError:
-            pass
-        return result
+        return test_add_data
+        # httptestret = self._req_post(test_add_data).json()
+        # result = list()
+        # result.append(httptestret)
+        # try:
+        #     result.append(triggadd_ret)
+        # except NameError:
+        #     pass
+        # return result
 
     def httptestdel(self, del_testid):
         paramslst = dict(httptestid=del_testid)
