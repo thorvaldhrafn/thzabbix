@@ -63,16 +63,8 @@ class HTTPtest(object):
     def _httptestfull(self, params, method):
         check_name = params["name"]
         params = self._addparam(params)
-        print(params)
-        if method == "httptest.create":
-            host_id = self.zabb_req.hostidbyip(params["host_ip"])
-            del params["host_ip"]
-            hostname = self.hostget(dict(hostid=host_id))["name"]
-            params["hostid"] = host_id
-            triggadd_ret = self._trigg_add(check_name, hostname).json()
-        #     paramslst = self._httptest_addlist(params)
-        # elif method == "httptest.update":
-        #     paramslst = self._httptest_updlist(params)
+        host_id = self.zabb_req.hostidbyip(params["host_ip"])
+        del params["host_ip"]
         if method != "httptest.create" and method != "httptest.update":
             return False
         test_add_data = self.basedata.copy()
@@ -81,10 +73,11 @@ class HTTPtest(object):
         httptestret = self._req_post(test_add_data).json()
         result = list()
         result.append(httptestret)
-        try:
+        if method == "httptest.create":
+            hostname = self.hostget(dict(hostid=host_id))["name"]
+            params["hostid"] = host_id
+            triggadd_ret = self._trigg_add(check_name, hostname).json()
             result.append(triggadd_ret)
-        except NameError:
-            pass
         return result
 
     def httptestdel(self, del_testid):
