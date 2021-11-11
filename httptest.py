@@ -23,9 +23,9 @@ class HTTPtest(object):
     def _addparam(self, add_params):
         if not add_params.get("delay"):
             add_params["delay"] = self.delay
-        if not add_params.get("follow_redirects"):
-            add_params["follow_redirects"] = self.follow_redirects
         for step in add_params["steps"]:
+            if not step.get("follow_redirects"):
+                add_params["follow_redirects"] = self.follow_redirects
             if not step.get("timeout"):
                 step["timeout"] = self.timeout
         return add_params
