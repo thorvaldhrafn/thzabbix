@@ -66,6 +66,13 @@ class ZabbReq(object):
         hosts_get_data = self.req_post(hosts_get)["result"]
         return hosts_get_data[1]
 
+    def hostsidlist(self):
+        full_data_lst = self.hostslist()
+        res_lst = list()
+        for i in full_data_lst:
+            res_lst.append(i["hostid"])
+        return res_lst
+
 
 # def conf_get(conf_file):
 #     conf_param = dict()
