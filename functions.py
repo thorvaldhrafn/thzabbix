@@ -58,7 +58,7 @@ class ZabbReq(object):
         paramslst = dict(output="extend")
         hosts_get = dict(method="host.get", data=paramslst)
         hosts_get_data = self.req_post(hosts_get)["result"]
-        return list(hosts_get_data.keys())
+        return hosts_get_data[0]
 
 
 # def conf_get(conf_file):
