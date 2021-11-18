@@ -54,7 +54,7 @@ class ZabbReq(object):
             return False
         paramslst["filter"] = paramsfilter
         host_get = dict(method=method_rst, data=paramslst)
-        return self.req_post(host_get)
+        return self.req_post(host_get)["result"]
 
     def addhost(self, hcreatedata):
         addhost_get = dict(method="host.create", data=hcreatedata)
