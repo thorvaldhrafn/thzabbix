@@ -29,6 +29,12 @@ class ZabbReq(object):
             print("Host not found")
             return False
 
+    def hostipbyid(self, host_id):
+        find_data = dict(filter=dict(hostid=host_id))
+        res_req = self.req_post(dict(data=find_data, method="hostinterface.get"))["result"]
+        host_ip = res_req[0]["ip"]
+        return host_ip
+
     def lf_data(self, method_get, param, param1):
         paramslst = dict(output="extend")
         paramsfilter = dict()
