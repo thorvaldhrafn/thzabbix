@@ -64,7 +64,7 @@ class ZabbReq(object):
         paramslst = dict(output="extend")
         hosts_get = dict(method="host.get", data=paramslst)
         hosts_get_data = self.req_post(hosts_get)["result"]
-        return hosts_get_data[1]
+        return hosts_get_data
 
     def hostsidlist(self):
         full_data_lst = self.hostslist()
