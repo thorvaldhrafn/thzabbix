@@ -4,7 +4,7 @@ import os
 import sys
 
 
-class ZabbReq(object):
+class ZabbReq:
     def __init__(self, creds):
         self.headers = {'content-type': 'application/json-rpc'}
         self.url = creds["url"]
