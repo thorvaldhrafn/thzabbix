@@ -54,6 +54,25 @@ class ZabbReq:
         host_get = dict(method=method_rst, data=paramslst)
         return self.req_post(host_get)["result"]
 
+    def host_tmplt_list(self, hostid):
+        search_data = dict(method="host.get", data=dict(selectParentTemplates=list("templateid"), hostids=hostid))
+        result_data = self.req_post(search_data)["result"][0]['parentTemplates']
+        templt_lst = list()
+        for i in result_data:
+            templt_lst.append(i['templateid'])
+        return templt_lst
+
+    def host_tmplt_upd(self, hostid, tmplt_lst):
+        hupdttedata = dict(hostid=hostid)
+        hupdttedata["templates"] = tmplt_lst
+        updtmplt_req = dict(method="host.update", data=hupdttedata)
+        return self.req_post(updtmplt_req)
+
+    def host_tmplt_add(self, hostid, tmplt_id):
+        tmplts_list = self.host_tmplt_list(hostid)
+        full_list = tmplts_list.append(tmplt_id)
+        return self.host_tmplt_upd(hostid, full_list)
+
     def addhost(self, hcreatedata):
         addhost_get = dict(method="host.create", data=hcreatedata)
         return self.req_post(addhost_get)
