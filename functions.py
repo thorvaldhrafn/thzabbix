@@ -57,10 +57,10 @@ class ZabbReq:
     def host_tmplt_list(self, hostid):
         search_data = dict(method="host.get", data=dict(selectParentTemplates=list("templateid"), hostids=hostid))
         result_data = self.req_post(search_data)["result"][0]['parentTemplates']
-        print(result_data)
         templt_lst = list()
         for i in result_data:
             templt_lst.append(i['templateid'])
+        print(templt_lst)
         return templt_lst
 
     def host_tmplt_upd(self, hostid, tmplt_lst):
