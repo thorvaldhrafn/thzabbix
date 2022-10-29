@@ -71,9 +71,8 @@ class ZabbReq:
 
     def host_tmplt_add(self, hostid, tmplt_id):
         tmplts_list = self.host_tmplt_list(hostid)
-        print(tmplt_id)
-        full_list = tmplts_list.append(tmplt_id)
-        return self.host_tmplt_upd(hostid, full_list)
+        tmplts_list.append(tmplt_id)
+        return self.host_tmplt_upd(hostid, tmplts_list)
 
     def addhost(self, hcreatedata):
         addhost_get = dict(method="host.create", data=hcreatedata)
