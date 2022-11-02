@@ -17,9 +17,6 @@ class HTTPtest(object):
         self.follow_redirects = 0
         self.zabb_req = ZabbReq(creds)
 
-    def _req_post(self, req_data):
-        return requests.post(self.url, data=json.dumps(req_data), headers=self.headers)
-
     def _addparam(self, add_params):
         if not add_params.get("delay"):
             add_params["delay"] = self.delay
@@ -57,27 +54,26 @@ class HTTPtest(object):
         full_data = self.basedata.copy()
         full_data["params"] = paramslst
         full_data["method"] = "trigger.create"
-        return self._req_post(full_data)
+        return self.zabb_req.req_post(full_data)
 
     def _httptestfull(self, params, method):
         check_name = params["name"]
         params = self._addparam(params)
+        result = list()
         if method == "httptest.create":
             host_id = self.zabb_req.hostidbyip(params["host_ip"])
-            hostname = self.hostget(dict(hostid=host_id))["name"]
+            hostname = self.zabb_req.hostget(dict(hostid=host_id))["name"]
+            triggadd_ret = self._trigg_add(check_name, hostname).json()
             del params["host_ip"]
             params["hostid"] = host_id
+            result.append(triggadd_ret)
         if method != "httptest.create" and method != "httptest.update":
             return False
         test_add_data = self.basedata.copy()
         test_add_data["params"] = params
         test_add_data["method"] = method
-        httptestret = self._req_post(test_add_data).json()
-        result = list()
+        httptestret = self.zabb_req.req_post(test_add_data).json()
         result.append(httptestret)
-        if method == "httptest.create":
-            triggadd_ret = self._trigg_add(check_name, hostname).json()
-            result.append(triggadd_ret)
         return result
 
     def httptestdel(self, del_testid):
@@ -85,7 +81,7 @@ class HTTPtest(object):
         full_data = self.basedata.copy()
         full_data["params"] = paramslst
         full_data["method"] = "httptest.delete"
-        del_data = self._req_post(full_data)
+        del_data = self.zabb_req.req_post(full_data)
         return del_data
 
     def httptestadd(self, add_params):
@@ -95,11 +91,3 @@ class HTTPtest(object):
     def httptestupd(self, upd_params):
         method = "httptest.update"
         return self._httptestfull(upd_params, method)
-
-    def hostget(self, params):
-        paramslst = dict(output="extend")
-        paramslst["filter"] = params
-        full_data = self.basedata.copy()
-        full_data["params"] = paramslst
-        full_data["method"] = "host.get"
-        return self._req_post(full_data).json()["result"][0]

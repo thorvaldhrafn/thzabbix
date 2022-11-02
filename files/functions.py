@@ -13,13 +13,12 @@ class ZabbReq:
 
     def req_post(self, req_data):
         full_data = self.basedata.copy()
-        full_data["method"] = req_data["method"]
-        full_data["params"] = req_data["data"]
+        full_data.update(req_data)
         return requests.post(self.url, data=json.dumps(full_data), headers=self.headers).json()
 
     def hostidbyip(self, host_ip):
         find_data = dict(filter=dict(ip=host_ip))
-        res_req = self.req_post(dict(data=find_data, method="hostinterface.get"))["result"]
+        res_req = self.req_post(dict(params=find_data, method="hostinterface.get"))["result"]
         if len(res_req) > 0:
             host_id = res_req[0]["hostid"]
             return host_id
@@ -29,7 +28,7 @@ class ZabbReq:
 
     def hostipbyid(self, host_id):
         find_data = dict(filter=dict(hostid=host_id))
-        res_req = self.req_post(dict(data=find_data, method="hostinterface.get"))["result"]
+        res_req = self.req_post(dict(params=find_data, method="hostinterface.get"))["result"]
         host_ip = res_req[0]["ip"]
         return host_ip
 
@@ -51,11 +50,11 @@ class ZabbReq:
         else:
             return False
         paramslst["filter"] = paramsfilter
-        host_get = dict(method=method_rst, data=paramslst)
+        host_get = dict(method=method_rst, params=paramslst)
         return self.req_post(host_get)["result"]
 
     def host_tmplt_list(self, hostid):
-        search_data = dict(method="host.get", data=dict(selectParentTemplates=list("templateid"), hostids=hostid))
+        search_data = dict(method="host.get", params=dict(selectParentTemplates=list("templateid"), hostids=hostid))
         result_data = self.req_post(search_data)["result"][0]['parentTemplates']
         templt_lst = list()
         for i in result_data:
@@ -66,7 +65,7 @@ class ZabbReq:
         hupdttedata = dict(hostid=hostid)
         tmplt_lst=list(dict.fromkeys(tmplt_lst))
         hupdttedata["templates"] = tmplt_lst
-        updtmplt_req = dict(method="host.update", data=hupdttedata)
+        updtmplt_req = dict(method="host.update", params=hupdttedata)
         return self.req_post(updtmplt_req)
 
     def host_tmplt_add(self, hostid, tmplt_id):
@@ -75,12 +74,12 @@ class ZabbReq:
         return self.host_tmplt_upd(hostid, tmplts_list)
 
     def addhost(self, hcreatedata):
-        addhost_get = dict(method="host.create", data=hcreatedata)
+        addhost_get = dict(method="host.create", params=hcreatedata)
         return self.req_post(addhost_get)
 
     def hostslist(self):
         paramslst = dict(output="extend")
-        hosts_get = dict(method="host.get", data=paramslst)
+        hosts_get = dict(method="host.get", params=paramslst)
         hosts_get_data = self.req_post(hosts_get)["result"]
         return hosts_get_data
 
@@ -90,3 +89,11 @@ class ZabbReq:
         for i in full_data_lst:
             res_lst.append(i["hostid"])
         return res_lst
+
+    def hostget(self, params):
+        paramslst = dict(output="extend")
+        paramslst["filter"] = params
+        full_data = self.basedata.copy()
+        full_data["params"] = paramslst
+        full_data["method"] = "host.get"
+        return self.req_post(full_data).json()["result"][0]
