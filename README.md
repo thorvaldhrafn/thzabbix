@@ -6,8 +6,8 @@ Support Zabbix 6.0.x
 
 Contains two classes - ZabbReq and HTTPtest. First do different kind of tasks in Zabbix api, second has target only Zabbix web tests.
 
-1. [ZabbReq](zabbreq)
-2. [HTTPtest](httptest)
+1. [ZabbReq](#zabbreq)
+2. [HTTPtest](#httptest)
 
 ### ZabbReq
 

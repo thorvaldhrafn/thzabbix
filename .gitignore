@@ -5,3 +5,4 @@
 *.yml
 *.conf
 test.py
+dist
