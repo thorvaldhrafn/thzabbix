@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="thzabbix",
-    version="0.0.1",
+    version="0.0.4",
     author="Volodymyr Borysiuk",
     author_email="thorvaldr.hrafn@gmail.com",
     description="Package for work with zabbix api",
