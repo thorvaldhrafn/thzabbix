@@ -6,3 +6,4 @@
 *.conf
 test.py
 dist
+thzabbix.egg-info
