@@ -20,8 +20,8 @@ from thzabbix import ZabbReq
 
 host_ip = "XXX.XXX.XXX.XXX"
 zabb_user = "apiuser"
-passwd = "secret"
-url = "https://zabbix.example.com/api_jsonrpc.php"
+zabb_passwd = "secret"
+zabb_url = "https://zabbix.example.com/api_jsonrpc.php"
 
 zabb_creds = dict(user=zabb_user, passwd=zabb_passwd, url=zabb_url)
 ZabbReq = ZabbReq(zabb_creds)
@@ -49,8 +49,8 @@ For example:
 from thzabbix import ZabbReq
 
 zabb_user = "apiuser" # zabbix username, string
-passwd = "secret" # zabbix user password, string
-url = "https://zabbix.example.com/api_jsonrpc.php" # url of zabbix api
+zabb_passwd = "secret" # zabbix user password, string
+zabb_url = "https://zabbix.example.com/api_jsonrpc.php" # url of zabbix api
 
 zabb_creds = dict(user=zabb_user, passwd=zabb_passwd, url=zabb_url)
 ZabbReq = ZabbReq(zabb_creds)
@@ -92,7 +92,7 @@ hostcreate = dict(host=hostname,
 For example:
 
 ```
-from thzabbix import ZabbReq
+from thzabbix import HTTPtest
 
 zabb_user = "apiuser" # zabbix username, string
 passwd = "secret" # zabbix user password, string
