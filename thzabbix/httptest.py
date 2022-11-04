@@ -62,7 +62,7 @@ class HTTPtest(object):
         result = list()
         if method == "httptest.create":
             host_id = self.zabb_req.hostidbyip(params["host_ip"])
-            hostname = self.zabb_req.hostget(dict(hostid=host_id))["name"]
+            hostname = self.zabb_req.hostdata(host_id)["name"]
             triggadd_ret = self._trigg_add(check_name, hostname).json()
             del params["host_ip"]
             params["hostid"] = host_id

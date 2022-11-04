@@ -37,7 +37,9 @@ print(ZabbReq.req_post(dict(params=dict(filter=dict(ip=host_ip)), method="hostin
 
 `ZabbReq.host_tmplt_upd(hostid, tmplt_lst)` - update templates (as template id), linked to host id. `host_id` is string variable, `tmplt_lst` is list of templates id.
 
-`ZabbReq.host_tmplt_add(hostid, tmplt_id)` - get template ids list, linked to host id. `host_id` is string variable, `tmplt_id` is string variable, template id.
+`ZabbReq.host_tmplt_add(hostid, tmplt_id)` - add template, linked to host id. `host_id` is string variable, `tmplt_id` is string variable, template id.
+
+`ZabbReq.host_tmplt_del(hostid, tmplt_id)` - remove template, linked to host id. `host_id` is string variable, `tmplt_id` is string variable, template id.
 
 `ZabbReq.addhost(hcreatedata)` - create host. `hcreatedata` is dict of parameters for new host. 
 
@@ -63,7 +65,7 @@ host_ip = "XXX.XXX.XXX.XXX"
 group_id = XXXXXX # group id for host
 template_id = YYYYYY # template id linked to host
 
-# groups and templates can be set as list of dictionary to add hosr in many groups or/and lynk many templates 
+# groups and templates can be set as list of dictionary to add host in many groups or/and lynk many templates. 'templates' is optional parameter, osers is required
 
 hostcreate = dict(host=hostname, 
     tls_connect=tlsconnect, 
@@ -75,9 +77,11 @@ hostcreate = dict(host=hostname,
     templates=[dict(templateid=template_id)])
 ```
 
-`ZabbReq.hostslist()` - print host list with extended data. 
+`ZabbReq.hostslist()` - print hosts list with extended data. 
 
-`ZabbReq.hostsidlist()` - print host id list. 
+`ZabbReq.hostsidlist()` - print hosts id list. 
+
+`ZabbReq.hostdata(hostid)` - print host data. 
 
 ### HTTPtest
 

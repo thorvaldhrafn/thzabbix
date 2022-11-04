@@ -73,8 +73,14 @@ class ZabbReq:
         tmplts_list.append(tmplt_id)
         return self.host_tmplt_upd(hostid, tmplts_list)
 
+    def host_tmplt_del(self, hostid, tmplt_id):
+        tmplts_list = self.host_tmplt_list(hostid)
+        tmplts_list.remove(tmplt_id)
+        return self.host_tmplt_upd(hostid, tmplts_list)
+
     def addhost(self, hcreatedata):
         addhost_get = dict(method="host.create", params=hcreatedata)
+        print(addhost_get)
         return self.req_post(addhost_get)
 
     def hostslist(self):
@@ -90,10 +96,10 @@ class ZabbReq:
             res_lst.append(i["hostid"])
         return res_lst
 
-    def hostget(self, params):
+    def hostdata(self, hostid):
         paramslst = dict(output="extend")
-        paramslst["filter"] = params
+        paramslst["filter"] = dict(hostid=hostid)
         full_data = self.basedata.copy()
         full_data["params"] = paramslst
         full_data["method"] = "host.get"
-        return self.req_post(full_data).json()["result"][0]
+        return self.req_post(full_data)["result"][0]
