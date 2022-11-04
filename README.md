@@ -95,18 +95,17 @@ For example:
 from thzabbix import HTTPtest
 
 zabb_user = "apiuser" # zabbix username, string
-passwd = "secret" # zabbix user password, string
-url = "https://zabbix.example.com/api_jsonrpc.php" # url of zabbix api
+zabb_passwd = "secret" # zabbix user password, string
+zabb_url = "https://zabbix.example.com/api_jsonrpc.php" # url of zabbix api
 
 zabb_creds = dict(user=zabb_user, passwd=zabb_passwd, url=zabb_url)
 HTTPtest = HTTPtest(zabb_creds)
 
-host_ip = "XXX.XXX.XXX.XXX" # host ip in zabbix
-test_dom = "example.com" # name of http test
+test_host = "XXX.XXX.XXX.XXX" # host ip in zabbix
 test_dom = "example.com" # name of http test
 steps_list = list(dict(name="example.com", url="https://example.com/", status_codes="200", no=1)) # data for one step check with default parameters
 
-print(HTTPtest.httptestadd(dict(host_ip=test_host, name=test_dom, steps=steps_list))
+print(HTTPtest.httptestadd(dict(host_ip=test_host, name=test_dom, steps=steps_list)))
 ```
 
 `HTTPtest.httptestupd(upd_params)` - update existence http test. `upd_params` is similar to `add_params` in `HTTPtest.httptestadd()`

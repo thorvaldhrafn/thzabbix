@@ -80,7 +80,6 @@ class ZabbReq:
 
     def addhost(self, hcreatedata):
         addhost_get = dict(method="host.create", params=hcreatedata)
-        print(addhost_get)
         return self.req_post(addhost_get)
 
     def hostslist(self):

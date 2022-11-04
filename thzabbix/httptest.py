@@ -63,7 +63,7 @@ class HTTPtest(object):
         if method == "httptest.create":
             host_id = self.zabb_req.hostidbyip(params["host_ip"])
             hostname = self.zabb_req.hostdata(host_id)["name"]
-            triggadd_ret = self._trigg_add(check_name, hostname).json()
+            triggadd_ret = self._trigg_add(check_name, hostname)
             del params["host_ip"]
             params["hostid"] = host_id
             result.append(triggadd_ret)
@@ -72,7 +72,7 @@ class HTTPtest(object):
         test_add_data = self.basedata.copy()
         test_add_data["params"] = params
         test_add_data["method"] = method
-        httptestret = self.zabb_req.req_post(test_add_data).json()
+        httptestret = self.zabb_req.req_post(test_add_data)
         result.append(httptestret)
         return result
 
@@ -86,6 +86,7 @@ class HTTPtest(object):
 
     def httptestadd(self, add_params):
         method = "httptest.create"
+        print(add_params)
         return self._httptestfull(add_params, method)
 
     def httptestupd(self, upd_params):
