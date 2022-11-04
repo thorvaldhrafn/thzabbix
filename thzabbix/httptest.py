@@ -60,13 +60,9 @@ class HTTPtest(object):
         check_name = params["name"]
         params = self._addparam(params)
         result = list()
-        if method == "httptest.create":
-            host_id = self.zabb_req.hostidbyip(params["host_ip"])
-            hostname = self.zabb_req.hostdata(host_id)["name"]
-            triggadd_ret = self._trigg_add(check_name, hostname)
-            del params["host_ip"]
-            params["hostid"] = host_id
-            result.append(triggadd_ret)
+        host_id = self.zabb_req.hostidbyip(params["host_ip"])
+        params["hostid"] = host_id
+        del params["host_ip"]
         if method != "httptest.create" and method != "httptest.update":
             return False
         test_add_data = self.basedata.copy()
@@ -74,6 +70,10 @@ class HTTPtest(object):
         test_add_data["method"] = method
         httptestret = self.zabb_req.req_post(test_add_data)
         result.append(httptestret)
+        if method == "httptest.create":
+            hostname = self.zabb_req.hostdata(host_id)["name"]
+            triggadd_ret = self._trigg_add(check_name, hostname)
+            result.append(triggadd_ret)
         return result
 
     def httptestdel(self, del_testid):
@@ -86,7 +86,6 @@ class HTTPtest(object):
 
     def httptestadd(self, add_params):
         method = "httptest.create"
-        print(add_params)
         return self._httptestfull(add_params, method)
 
     def httptestupd(self, upd_params):
