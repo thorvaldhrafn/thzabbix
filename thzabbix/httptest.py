@@ -1,7 +1,7 @@
 import json
 import requests
 
-from .functions import ZabbReq
+from .zabbreq import ZabbReq
 
 
 class HTTPtest(object):
