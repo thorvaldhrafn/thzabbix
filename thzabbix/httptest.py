@@ -60,9 +60,10 @@ class HTTPtest(object):
         check_name = params["name"]
         params = self._addparam(params)
         result = list()
-        host_id = self.zabb_req.hostidbyip(params["host_ip"])
-        params["hostid"] = host_id
-        del params["host_ip"]
+        if method == "httptest.create":
+            host_id = self.zabb_req.hostidbyip(params["host_ip"])
+            params["hostid"] = host_id
+            del params["host_ip"]
         if method != "httptest.create" and method != "httptest.update":
             return False
         test_add_data = self.basedata.copy()
