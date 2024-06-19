@@ -63,7 +63,7 @@ class ZabbReq:
 
     def host_tmplt_upd(self, hostid, tmplt_lst):
         hupdttedata = dict(hostid=hostid)
-        tmplt_lst=list(dict.fromkeys(tmplt_lst))
+        tmplt_lst = list(dict.fromkeys(tmplt_lst))
         hupdttedata["templates"] = tmplt_lst
         updtmplt_req = dict(method="host.update", params=hupdttedata)
         return self.req_post(updtmplt_req)
