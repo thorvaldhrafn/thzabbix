@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='thzabbix',
-    version='0.1.2',
+    version='0.1.3',
     packages=['thzabbix'],
     url='https://github.com/thorvaldhrafn/thzabbix',
     license='MIT License',
